@@ -1,25 +1,8 @@
-# antd-demo
+# antd test
 
-## Environment
+学习和使用 antd
+用其快速搭建后台系统
 
-```
-node >= 4
-```
+## 文档
 
-## Code Style
-
-https://github.com/airbnb/javascript
-
-## Develop
-
-```
-npm run dev
-```
-
-访问 http://127.0.0.1:8989 
-
-## Build
-
-```
-npm run build
-```
+http://ant.design/docs/react/introduce
