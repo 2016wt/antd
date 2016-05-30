@@ -11,27 +11,34 @@ import Sider from './js/component/Sider';
 
 import config from './js/common/config';
 
+const components = config.main.components;
 const App = React.createClass({
 	getDefaultProps: function(){
-        return {
-            title: config.title
-        }
     },
     getInitialState: function(){
-        return {};
+        console.log(config.sider.selectedKey)
+        return {
+            selectedKey: config.sider.selectedKey
+        }
     },
     componentWillMount: function(){},
+
+    siderChangeKey: function(value){
+        this.setState({selectedKey: value});
+    },
     render: function(){
+        console.log(this.setState.selectedKey)
+        const Main = config.main.components[this.state.selectedKey];
 
 		return  <div>
-                    <Header title={this.props.title} />
+                    <Header />
 
                     <div className="main-wrapper">
                         <aside className="aside-container">
-                            <Sider/>
+                            <Sider change={this.siderChangeKey}/>
                         </aside>
                         <section className="main-container">
-                            {this.props.children}
+                            <Main />
                         </section>
                     </div>
                 </div>
@@ -57,22 +64,9 @@ const Users = React.createClass({
         return <p>222</p>
     }
 });
-const User = React.createClass({
-    render: function(){
-        return <p>333</p>
-    }
-});
-const NoMatch = React.createClass({
-    render: function(){
-        return <p>333</p>
-    }
-});
 
 ReactDom.render((
     <Router history={hashHistory}>
-        <Route path="/" component={App}>
-            <Route path="About" components={About} />
-            <Route path="Users" components={Users} />
-        </Route>
+        <Route path="/" component={App}/>
     </Router>
 ), document.getElementById('react-content'));

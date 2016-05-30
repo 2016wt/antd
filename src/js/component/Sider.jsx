@@ -1,63 +1,55 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
 
-const menuStyle={
-}
-
-const menuObj = [
-    {
-        title: "新闻转码工具",
-        key: "sub1",
-        icon: "setting",
-        items: [
-            {title: "新闻卡片转码工具", key: "1"},
-            {title: "热词转码工具", key: "2"},
-            {title: "Tiny平台转码", key: "3"}
-        ]
-    },
-    {
-        title: "新闻下线工具",
-        key: "sub2",
-        icon: "delete",
-        items: [
-            {title: "新闻&时阿下线工具", key: "4"},
-            {title: "段子下线工具", key: "5"}
-        ]
-    }
-];
+import config from '../common/config';
 
 const Sider = React.createClass({
-    getInitialState() {
+    getDefaultProps: function(){
         return {
-            currentMenu: ['sub1','sub2'],
-            currentItem: '1'
+            menuList: config.sider.menu,
+            menuStyle: config.sider.style,
+            openKeys: config.sider.openKeys
+        }
+    },
+    getInitialState: function(){
+        return {
+            selectedKeys: config.sider.selectedKey
         };
     },
-    handleClick(e) {
+    handleClick: function(e) {
         this.setState({
-            currentItem: e.key
+            selectedKeys: e.key
         });
+
         this.props.change(e.key);
     },
-    render() {
-
-        const menuComp = menuObj.map(function(item){
-            return <Menu.SubMenu key={item.key} title={<span><Icon type={item.icon} /><span>{item.title}</span></span>}>
-                        {
-                            item.items.map(function(item){
-                                return <Menu.Item key={item.key}>{item.title}</Menu.Item>
-                            })
-                        }
-                    </Menu.SubMenu>
-        });
+    render: function() {
 
         return  <Menu onClick={this.handleClick}
-                    style={menuStyle}
-                    defaultOpenKeys={this.state.currentMenu}
-                    selectedKeys={[this.state.currentItem]}
+                    style={this.props.menuStyle}
+                    defaultOpenKeys={this.props.openKeys}
+                    selectedKeys={[this.state.selectedKeys]}
                     mode="inline">
-                    {menuComp}
+
+                    {this.dealMenuList(this.props.menuList)}
+
                 </Menu>;
+    },
+
+    dealMenuList: function(list){
+        const self = this;
+        return list.map(function(item){
+            if(item.items && item.items.length){
+                let icon = item.icon ? (<Icon type={item.icon} />): '';
+                return <Menu.SubMenu key={item.key} title={<span>{icon}<span>{item.title}</span></span>}>
+                    {
+                        self.dealMenuList(item.items)
+                    }
+                </Menu.SubMenu>
+            }else{
+                return <Menu.Item key={item.key}>{item.title}</Menu.Item>
+            }
+        });
     }
 });
 
