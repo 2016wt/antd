@@ -12,12 +12,12 @@ const Header = React.createClass({
         }
     },
     render: function() {
-        return  <Affix style={this.props.style}>
+        return  <div style={this.props.style}>
                     <h2>
                         <Icon className="header-icon" type={this.props.icon} />
                         {this.props.title}
                     </h2>
-                </Affix>;
+                </div>;
     }
 });
 

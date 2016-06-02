@@ -12,7 +12,8 @@
     "history": "^2.1.1",
     "react": "~0.14.3",
     "react-dom": "~0.14.3",
-    "react-router": "^2.4.0"
+    "react-router": "^2.4.0",
+    "reqwest": "^2.0.5"
   },
   "devDependencies": {
     "dora": "0.2.x",
