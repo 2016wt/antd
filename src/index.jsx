@@ -16,7 +16,6 @@ const App = React.createClass({
 	getDefaultProps: function(){
     },
     getInitialState: function(){
-        console.log(config.sider.selectedKey)
         return {
             selectedKey: config.sider.selectedKey
         }
@@ -27,7 +26,6 @@ const App = React.createClass({
         this.setState({selectedKey: value});
     },
     render: function(){
-        console.log(this.setState.selectedKey)
         const Main = config.main.components[this.state.selectedKey];
 
 		return  <div>

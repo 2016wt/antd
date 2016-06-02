@@ -73,7 +73,13 @@ const Config = {
         components: {
             "Feature1":require('../component/Feature1'),
 
-            "Feature2": require('../component/Feature2')
+            "Feature2": require('../component/Feature2'),
+            "Feature3": require('../component/Feature2'),
+            "Feature4": require('../component/Feature2'),
+            "Feature5": require('../component/Feature2'),
+            "Feature6": require('../component/Feature2'),
+            "Feature7": require('../component/Feature2'),
+            "Feature8": require('../component/Feature2')
         },
         style: {} 
     }
