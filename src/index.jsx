@@ -54,17 +54,6 @@ const App = React.createClass({
     componentWillUnmount: function(){}
 });
 
-const About = React.createClass({
-    render: function(){
-        return <p>111</p>
-    }
-});
-const Users = React.createClass({
-    render: function(){
-        return <p>222</p>
-    }
-});
-
 ReactDom.render((
     <Router history={hashHistory}>
         <Route path="/" component={App}/>

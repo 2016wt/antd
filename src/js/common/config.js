@@ -3,12 +3,21 @@
  * @type {Object}
  *
  * header 管理后台头部配置
+ *     title    String  标题
+ *     icon     String   标题图标
+ *     style    Object  自定义样式
  *
  * sider  管理后台侧栏配置
- * 
+ *     menu     Array   sider列表
+ *     openKeys Array   默认展开的sider区
+ *     selectedKey  String  默认打开的功能区
+ *     style    Object  自定义样式
+ *
+ * main  功能区域配置
+ *     components   Object  配置sider对应功能区域组件
+ *         Feature1     Object  对应sider menu 中的功能key对 应功能组件
+ *             
  */
-
-import CardsTranslate from '../component/CardsTranslate';
 
 const Config = {
     header: {
@@ -56,14 +65,15 @@ const Config = {
             }
         ],
         openKeys:["subTitle1", "subTitle2"],
-        selectedKey: "Feature4",
+        selectedKey: "Feature1",
         style: {}
     },
 
     main: {
         components: {
-            "Feature1" : require('../component/CardsTranslate'),
-            "Feature4" : require('../component/CardsTranslate')
+            "Feature1":require('../component/Feature1'),
+
+            "Feature2": require('../component/Feature2')
         },
         style: {} 
     }
