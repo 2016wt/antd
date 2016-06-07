@@ -36,7 +36,8 @@ const conf = {
         }, {
             title: '链接',
             dataIndex: 'link',
-            type: 'link'
+            type: 'link',
+            render: (text, item) => (<span><a href={text}>{item.title}</a></span>)   // 可自定义
         }
     ]
 

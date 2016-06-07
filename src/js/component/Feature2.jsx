@@ -35,17 +35,25 @@ const conf = {
             type: 'string'
         }, {
             title: '链接',
-            text: '链接文案', // 可选
             dataIndex: 'link',
             type: 'link'
         }, {
             title: '操作',
-            type: 'operate',
-            btns: ['链接文案1','链接文案2'], // 可选
-            callbacks: [function(item, callback){
-                
-            },function(item, callback){
+            type: 'operate',    // 操作的类型必须为 operate
+            btns: ['功能文案1','功能文案2'], // 可选
 
+            // 对应btns 的回调函数 
+            // item为操作的单一数据对象  
+            // callback 为组件的回调函数，将处理之后的数据回传 删除则传undefined
+            callbacks: [function(item, callback){
+                console.log('功能文案1');
+                console.log(item);
+                item.docid = 0;
+                callback(item);
+            },function(item, callback){
+                console.log('功能文案2');
+                console.log(item);
+                callback(item);
             }]
         }
     ]
