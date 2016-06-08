@@ -10,9 +10,9 @@
     "babel-plugin-antd": "^0.1.2",
     "es3ify-loader": "^0.1.0",
     "history": "^2.1.1",
+    "immutable": "^3.8.1",
     "react": "~0.14.3",
     "react-dom": "~0.14.3",
-    "react-redux": "^4.4.5",
     "react-router": "^2.4.0",
     "reqwest": "^2.0.5"
   },
@@ -24,8 +24,7 @@
     "eslint": "~1.10.3",
     "eslint-config-airbnb": "~2.1.0",
     "eslint-plugin-react": "~3.11.3",
-    "pre-commit": "1.x",
-    "redux-devtools": "^3.3.1"
+    "pre-commit": "1.x"
   },
   "scripts": {
     "dev": "dora -p 8001 --plugins atool-build,proxy,hmr",

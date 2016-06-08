@@ -3,70 +3,9 @@ import React from 'react';
 
 import { Table } from 'antd';
 
+import Immutable from 'immutable';
 //https://github.com/ded/reqwest
-import reqwest from 'reqwest';
-
-// 预处理配置显示中的 colums 数据 用于anted的table配置
-// const dealConfigColumns = (lists) => {
-//     let columns = [];
-//     // 操作集中处理各类回调函数
-//     let callbackList = [];
-
-//     const renderFunc = {
-//         link: (text) => (
-//                 <span>
-//                     <a href={text}>{text}</a>
-//                 </span>),
-
-//         image: (url) => (
-//                 <span>
-//                     <img src={url} />
-//                 </span>)
-//     }
-
-//     lists.forEach((item) => {
-//         let column = {
-//             title: item.title,
-//             dataIndex: item.dataIndex,
-//             key: item.dataIndex
-//         }
-        
-//         if( item.type === 'operate' ){
-//             // 兼容单一形式与数组形式
-//             let btns = Array.isArray(item.btns)?item.btns:[item.btns];
-//             let callbacks = Array.isArray(item.callbacks)?item.callbacks:[item.callbacks];
-            
-//             // 处理表单 操作 栏目以及回调函数
-//             column.render = item.render || function(txt, record){
-//                 return <span>
-//                         {
-//                             btns.map(function(btn,i) {
-//                                 // 统一回调函数
-//                                 callbackList.push(callbacks[i]);
-
-//                                 return  (
-//                                     <span key={i}>
-//                                         <a href="javascript:void 0;" onClick={operateCallbacks.bind(null, record, callbacks[i])} data-index={callbackList.length-1}>{btn}</a>
-//                                         {i!==btns.length-1?<span className="ant-divider"></span>:''}
-//                                     </span>
-//                                 );
-                                    
-//                             })
-//                         }
-//                         </span>
-//             };
-//         }else{
-//             column.render = item.render || renderFunc[item.type] || ((text) => (<span>{text}</span>));
-//         }
-//         columns.push(column);
-        
-//     });
-
-//     return {
-//         columns: columns,
-//         callbackList: callbackList
-//     };
-// };
+import Reqwest from 'reqwest';
 
 const operateCallbacks = (item, callback) => {
     
@@ -103,7 +42,10 @@ const FeatureSet = (config) => {
         },
         
         componentWillMount: function(){
-            this.dealConfigColumns(config.columns);
+
+            this.setState({
+                columns: this.dealConfigColumns(config.columns)
+            });
         },
 
         render: function() {
@@ -117,8 +59,6 @@ const FeatureSet = (config) => {
             const self = this;
 
             let columns = [];
-            // 操作集中处理各类回调函数
-            let callbackList = [];
 
             lists.forEach((item) => {
                 let column = {
@@ -137,12 +77,9 @@ const FeatureSet = (config) => {
                         return <span>
                                 {
                                     btns.map(function(btn,i) {
-                                        // 统一回调函数
-                                        callbackList.push(callbacks[i]);
-
                                         return  (
                                             <span key={i}>
-                                                <a href="javascript:void 0;" onClick={self.operateCallbacks.bind(self, record, callbacks[i])} data-index={callbackList.length-1}>{btn}</a>
+                                                <a href="javascript:void 0;" onClick={self.operateCallbacks.bind(self, record, callbacks[i])}>{btn}</a>
                                                 {i!==btns.length-1?<span className="ant-divider"></span>:''}
                                             </span>
                                         );
@@ -154,34 +91,44 @@ const FeatureSet = (config) => {
                 }else{
                     column.render = item.render || renderFunc[item.type] || ((text) => (<span>{text}</span>));
                 }
+
+                if(item.sort){
+                    column.sorter = item.sorter || ((a, b) => a[item.dataIndex] - b[item.dataIndex]);
+                }
                 columns.push(column);
                 
             });
-
-            self.setState({
-                columns: columns
-            });
+            
+            return columns;
+            
         },
 
         operateCallbacks: function(item, callback){
             const self = this;
-            let resultList = this.state.resultList;
-            let index;
 
-            resultList.some(function(v, i){
-                if(v.key === item.key){
-                    index = i;
-                    resultList[i] = item;
-                    return true;
-                } 
-            });
+            callback(item, function(item, type){
+                let resultList;
+                let itemI = Immutable.fromJS(item);
+                let result = Immutable.fromJS(self.state.resultList);
 
-            console.log(React)
-            //https://segmentfault.com/a/1190000003910357
+                if(type === 'update'){
+                    resultList = result.map(function(v, i){
+                        if(v.get('key') === itemI.get('key')){
+                            return itemI;
+                        }else{
+                            return v;
+                        }
+                    });
+                }else if(type === 'delete'){
+                    resultList = result.filter(function(v, i){
+                        if(v.get('key') !== itemI.get('key')){
+                            return true;
+                        }
+                    });
+                }
 
-            callback(item, function(item){
                 self.setState({
-                    resultList: resultList
+                    resultList: resultList.toJS()
                 });
             });
         },
@@ -189,7 +136,7 @@ const FeatureSet = (config) => {
         componentDidMount: function(){
             const self = this;
 
-            reqwest({
+            Reqwest({
                 url: config.url,
                 data: config.data,
                 type: 'jsonp',
