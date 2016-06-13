@@ -71,15 +71,38 @@ const Config = {
 
     main: {
         components: {
-            "Feature1":require('../component/Feature1'),
-
-            "Feature2": require('../component/Feature2'),
-            "Feature3": require('../component/Feature2'),
-            "Feature4": require('../component/Feature2'),
-            "Feature5": require('../component/Feature2'),
-            "Feature6": require('../component/Feature2'),
-            "Feature7": require('../component/Feature2'),
-            "Feature8": require('../component/Feature2')
+            "Feature1": {
+                title: '这是功能区域标题1',
+                component: require('../component/Feature1')
+            },   // 纯数据展示
+            "Feature2": {
+                title: '这是功能区域标题2',
+                component: require('../component/Feature2')
+            },   // 添加操作
+            "Feature3": {
+                title: '这是功能区域标题3',
+                component: require('../component/Feature3')
+            },
+            "Feature4": {
+                title: '这是功能区域标题4',
+                component: require('../component/Feature2')
+            },
+            "Feature5": {
+                title: '这是功能区域标题5',
+                component: require('../component/Feature2')
+            },
+            "Feature6": {
+                title: '这是功能区域标题6',
+                component: require('../component/Feature2')
+            },
+            "Feature7": {
+                title: '这是功能区域标题7',
+                component: require('../component/Feature2')
+            },
+            "Feature8": {
+                title: '这是功能区域标题8',
+                component: require('../component/Feature2')
+            }
         },
         style: {} 
     }

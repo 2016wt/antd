@@ -26,8 +26,8 @@ const App = React.createClass({
         this.setState({selectedKey: value});
     },
     render: function(){
-        const Main = config.main.components[this.state.selectedKey];
-
+        const Main = config.main.components[this.state.selectedKey].component;
+        const title = config.main.components[this.state.selectedKey].title;
 		return  <div>
                     <Header />
 
@@ -36,7 +36,7 @@ const App = React.createClass({
                             <Sider change={this.siderChangeKey}/>
                         </aside>
                         <section className="main-container">
-                            <Main />
+                            <Main title={title}/>
                         </section>
                     </div>
                 </div>

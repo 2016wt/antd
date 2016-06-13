@@ -3,25 +3,57 @@ import React from 'react';
 
 import FeatureSetConfig from './FeatureSetConfig';
 
-const conf = {
-    url: 'http://uil.cbs.baidu.com/rssfeed/fetch?fn=?',
-    data: {
-        type: 'entry_list',
-        num: 20,
-        ua: 'bd_1_1_1_5-5-0-0_1',
-        cuid: '00000000000000000000000000000000%7C0000000000000000',
-        channel: 'AA_0',
-        dir: 'up'
-    },
-    type: 'jsonp',
+import Immutable from 'immutable';
+//https://github.com/ded/reqwest
+import Reqwest from 'reqwest';
 
-    preFormatData : function(data){
-        let lists = data.data.stream_data;
-        
-        lists.forEach(function(ele) {
-            ele.key = ele.docid;
+
+const conf = {
+    
+    initData: function(callback){
+
+        let data = {
+            type: 'entry_list',
+            num: 20,
+            ua: 'bd_1_1_1_5-5-0-0_1',
+            cuid: '00000000000000000000000000000000%7C0000000000000000',
+            channel: 'AA_0',
+            dir: 'up'
+        }
+
+        Reqwest({
+            url: 'http://uil.cbs.baidu.com/rssfeed/fetch?fn=?',
+            data: data,
+            type: 'jsonp',
+            jsonpCallback: 'fn',
+            success: function (data) {
+                let lists = data.data.stream_data;
+                
+                // 必须要向数据中 添加唯一的 key
+                lists.forEach(function(ele) {
+                    ele.key = ele.docid;
+                });
+
+                callback(lists);
+            }
         });
-        return lists;
+           
+    },
+
+    Delete: function(data, callback){
+    
+        let dataI = Immutable.fromJS({
+            type: 'entry_list'
+        }).merge({id: data.key});
+        
+        // ... 操作删除请求
+        console.log(dataI.toJS());
+        
+        // 模拟请求删除成功的回调
+        setTimeout(function(){
+            callback();
+        }, 1000)
+           
     },
 
     columns: [
@@ -41,17 +73,25 @@ const conf = {
         }, {
             title: '操作',
             type: 'operate',    // 操作的类型必须为 operate
-            btns: ['更新','删除'], // 可选
-
+            btns: [{
+                text: '删除',
+                type: 'delete'
+            }, {
+                text: '展示',
+                callback: function(item){
+                    console.log(item)
+                }
+            }], // 可选
+            
             // 对应btns 的回调函数 
             // item为操作的单一数据对象  
             // callback 为组件的回调函数，将处理之后的数据回传 删除则传undefined
-            callbacks: [function(item, callback){
-                item.docid = 0;
-                callback(item, 'update');
-            },function(item, callback){
-                callback(item, 'delete');
-            }]
+            // callbacks: [function(item, callback){
+            //     item.docid = 0;
+            //     callback(item, 'update');
+            // },function(item, callback){
+            //     callback(item, 'delete');
+            // }]
         }
     ]
 
