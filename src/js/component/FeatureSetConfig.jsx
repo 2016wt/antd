@@ -1,13 +1,16 @@
 // 纯数据展现情况列表
 import React from 'react';
 
-import { Table, Form, Select, Input, Row, Col, Button, DatePicker } from 'antd';
+import { Table, Form, Select, Input, Row, Col, Button } from 'antd';
+import { DatePicker, TimePicker, Radio} from 'antd';
 
 import Immutable from 'immutable';
 //https://github.com/ded/reqwest
 import Reqwest from 'reqwest';
 
 const FormItem = Form.Item;
+const Option = Select.Option;
+const RadioGroup = Radio.Group;
 
 // columns 类型对应的通用痛render
 const renderFunc = {
@@ -27,7 +30,7 @@ const FeatureSet = (config) => {
     
     //let columnsData = dealConfigColumns(config.columns);
     
-    const Feature = React.createClass({
+    let Feature = React.createClass({
         getInitialState: function(){
             return {
                 columns: [],
@@ -45,31 +48,22 @@ const FeatureSet = (config) => {
         },
 
         render: function() {
-            const searchForm =  <div className="f-search">
-                                    <Form inline>
-                                        <FormItem
-                                            label="账户户账户">
-                                            <Input placeholder="请输入账户名" />    
+            const self = this;
+            
+            const searchForm =  config.RType ?
+                                (<div className="f-search">
+                                    <Form inline onSubmit={self.handleRetrieve}>
+                                        { 
+                                            config.RType.map(function(item){
+                                                return self.dealConfigRType(item);
+                                            })
+                                        }
+                                        <FormItem key="search-btn">
+                                            <Button type="primary" htmlType="submit">查询</Button>
                                         </FormItem>
-                                        <FormItem
-                                            label="账户">
-                                            <Input placeholder="请输入账户名" />    
-                                        </FormItem>                              
-                                        <FormItem
-                                            label="账户">
-                                            <Input placeholder="请输入账户名" />    
-                                        </FormItem>                       
-                                        <FormItem
-                                            label="账户">
-                                            <Input placeholder="请输入账户名" />    
-                                        </FormItem>
-                                        <FormItem
-                                            label="账户">
-                                            <Input placeholder="请输入账户名" />    
-                                        </FormItem>
-                                        
                                     </Form>
-                                </div>
+                                </div>):
+                                '';
             return  <div>
                         <h3 className="f-title">{this.props.title}</h3>
                         {searchForm}
@@ -110,6 +104,8 @@ const FeatureSet = (config) => {
                                 }
                                 </span>
                     };
+
+                    column.width = 150;
                 }else{
                     column.render = item.render || renderFunc[item.type] || ((text) => (<span>{text}</span>));
                 }
@@ -125,6 +121,82 @@ const FeatureSet = (config) => {
             
         },
 
+        dealConfigRType: function(item){
+            const { getFieldProps } = this.props.form;
+
+            switch (item.type){
+                case 'string':
+                    return <FormItem
+                                label={item.label}
+                                key={item.name}>
+                                <Input placeholder={item.placeholder||''}
+                                {...getFieldProps(item.name)} />    
+                            </FormItem>
+                    break;
+
+                case 'date':
+                    return <FormItem
+                                label={item.label}
+                                key={item.name}>
+                                <DatePicker {...getFieldProps(item.name)} />  
+                            </FormItem>
+                    break;
+
+                case 'time':
+                    return <FormItem
+                                label={item.label}
+                                key={item.name}>
+                                <TimePicker {...getFieldProps(item.name)} />  
+                            </FormItem>
+                    break;
+
+                case 'select':
+                    return <FormItem
+                                label={item.label}
+                                key={item.name}>
+                                <Select  {...getFieldProps(item.name, { initialValue: item.defaultValue||item.options[0].value })} >
+                                    {
+                                        item.options.map(function(item){
+                                            return <Option key={item.value} value={item.value}>{item.text}</Option>
+                                        })
+                                    }
+                                </Select>
+                            </FormItem>
+                    break;
+
+                case 'radio':
+                    return <FormItem
+                                label={item.label}
+                                key={item.name}>
+                                <RadioGroup {...getFieldProps(item.name, { initialValue: item.defaultValue||item.options[0].value })}>
+                                    {
+                                        item.options.map(function(item){
+                                            return <Radio key={item.value} value={item.value}>{item.text}</Radio>
+                                        })
+                                    }
+                                </RadioGroup>
+                            </FormItem>
+                    break;
+
+                default:
+                    return '';
+                    break;
+            }
+        },
+        
+        handleRetrieve: function(e){
+            e.preventDefault();
+            const self = this;
+
+            console.log('收到表单值：', this.props.form.getFieldsValue());
+            
+            config.Retrieve(self.props.form.getFieldsValue(), function(list){
+                self.setState({
+                    loading: false,
+                    resultList: list
+                });
+            });
+        },
         operateCallbacks: function(item, btn){
             const self = this;
 
@@ -202,6 +274,8 @@ const FeatureSet = (config) => {
             
         },
     });
+
+    Feature = Form.create()(Feature);
 
     return Feature;
 }

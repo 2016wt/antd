@@ -1,4 +1,4 @@
-// import 'antd/lib/index.css';
+// import 'antd/dist/index.css';
 // import './index.less';
 
 import './index.less';
