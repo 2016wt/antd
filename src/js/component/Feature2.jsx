@@ -61,7 +61,8 @@ const conf = {
             title: 'DOCID',     // table header 文案
             dataIndex: 'docid', // 数据对象内的属性，也做react vdom 的key
             type: 'string',     // table 内显示的类型
-            sort: true          // 是否需要排序
+            sort: true,         // 是否需要排序
+            width:200           // 列宽 可选 不填为默认均分
         }, {
             title: '标题',
             dataIndex: 'title',
@@ -73,6 +74,7 @@ const conf = {
         }, {
             title: '操作',
             type: 'operate',    // 操作的类型必须为 operate
+            width: 80,
             btns: [{
                 text: '删除',
                 type: 'delete'

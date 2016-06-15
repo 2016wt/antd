@@ -85,7 +85,7 @@ const Config = {
             },
             "Feature4": {
                 title: '这是功能区域标题4',
-                component: require('../component/Feature2')
+                component: require('../component/Feature4')
             },
             "Feature5": {
                 title: '这是功能区域标题5',

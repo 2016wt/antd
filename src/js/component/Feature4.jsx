@@ -59,8 +59,6 @@ const conf = {
            
     },
     Update:function(){},
-
-    
     Retrieve: function(data, callback){
         let dataI = Immutable.fromJS({
             type: 'entry_list',
@@ -89,7 +87,134 @@ const conf = {
     },
 
     // 可设置的查询字段
-    RType:[
+    // RType:[
+    //     {
+    //         name: 'id',
+    //         label: '唯一标识',
+    //         type: 'string',
+    //         placeholder: '请输入标示名称'
+    //     },{
+    //         name: 'date',
+    //         label: '项目开始时间',
+    //         type: 'date'
+    //     },{
+    //         name: 'time',
+    //         label: '项目开始时间',
+    //         type: 'time'
+    //     },{
+    //         name: 'stype',
+    //         label: '项目类型Select',
+    //         type: 'select',
+    //         defaultValue: 'one',
+    //         options:[{
+    //             text: '选项一',
+    //             value: 'one'
+    //         },{
+    //             text: '选项二',
+    //             value: 'two'
+    //         },{
+    //             text: '选项三',
+    //             value: 'three'
+    //         }]
+    //     },{
+    //         name: 'rtype',
+    //         label: '项目类型Radio',
+    //         type: 'radio',
+    //         defaultValue: 'one',
+    //         options:[{
+    //             text: '选项一',
+    //             value: 'one'
+    //         },{
+    //             text: '选项二',
+    //             value: 'two'
+    //         },{
+    //             text: '选项三',
+    //             value: 'three'
+    //         }]
+    //     },{
+    //         name: 'ischange',
+    //         label: '是否过滤',
+    //         type: 'switch'
+    //     }
+
+    // ],
+
+    // 创建项目所需的字段
+    CType:[
+        {
+            name: 'id',
+            label: '唯一标识',
+            type: 'string',
+            placeholder: '请输入标示名称',
+            require: true
+        },{
+            name: 'id2',
+            label: '唯一标识',
+            type: 'string',
+            placeholder: '请输入标示名称',
+            require: true
+        },{
+            name: 'id3',
+            label: '唯一标识',
+            type: 'string',
+            placeholder: '请输入标示名称',
+            require: true
+        },{
+            name: 'id4',
+            label: '唯一标识',
+            type: 'string',
+            placeholder: '请输入标示名称',
+            require: true
+        },{
+            name: 'date',
+            label: '项目开始时间',
+            type: 'date',
+            require: true
+        },{
+            name: 'time',
+            label: '项目开始时间',
+            type: 'time'
+        },{
+            name: 'stype',
+            label: '项目类型Select',
+            type: 'select',
+            require: true,
+            defaultValue: 'one',
+            options:[{
+                text: '选项一',
+                value: 'one'
+            },{
+                text: '选项二',
+                value: 'two'
+            },{
+                text: '选项三',
+                value: 'three'
+            }]
+        },{
+            name: 'rtype',
+            label: '项目类型Radio',
+            type: 'radio',
+            defaultValue: 'one',
+            options:[{
+                text: '选项一',
+                value: 'one'
+            },{
+                text: '选项二',
+                value: 'two'
+            },{
+                text: '选项三',
+                value: 'three'
+            }]
+        },{
+            name: 'ischange',
+            label: '是否过滤',
+            type: 'switch'
+        }
+
+    ],
+
+    // 更新项目所需的字段
+    UType:[
         {
             name: 'id',
             label: '唯一标识',
@@ -136,11 +261,12 @@ const conf = {
         },{
             name: 'ischange',
             label: '是否过滤',
-            type: 'switch',
-            defaultValue: false
+            type: 'switch'
         }
 
     ],
+
+
 
     columns: [
         {
