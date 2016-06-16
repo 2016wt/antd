@@ -1,9 +1,9 @@
 // 纯数据展现情况列表
 import React from 'react';
 
-import { Table, Form, Select, Input, Row, Col, Button } from 'antd';
+import { Table, Form, Select, Input, Row, Col, Button, Icon } from 'antd';
 import { DatePicker, TimePicker, Radio, Switch} from 'antd';
-import { Modal } from 'antd';
+import { Upload, Modal } from 'antd';
 
 import Immutable from 'immutable';
 //https://github.com/ded/reqwest
@@ -38,14 +38,14 @@ const FeatureSet = (config) => {
             const RType = this.props.RType;
             return RType ?
                     (<div className="f-search">
-                        <Form inline onSubmit={self.handleRetrieve}>
+                        <Form inline>
                             { 
                                 RType.map(function(item){
                                     return self.dealConfigRType(item);
                                 })
                             }
                             <FormItem key="search-btn">
-                                <Button type="primary" htmlType="submit">查询</Button>
+                                <Button type="primary" onClick={this.handleRetrieve}>查询</Button>
                             </FormItem>
                         </Form>
                     </div>):
@@ -69,15 +69,7 @@ const FeatureSet = (config) => {
                     return <FormItem
                                 label={item.label}
                                 key={item.name}>
-                                <DatePicker {...getFieldProps(item.name)} />  
-                            </FormItem>
-                    break;
-
-                case 'time':
-                    return <FormItem
-                                label={item.label}
-                                key={item.name}>
-                                <TimePicker {...getFieldProps(item.name)} />  
+                                <DatePicker showTime format="yyyy-MM-dd HH:mm:ss" {...getFieldProps(item.name)} />  
                             </FormItem>
                     break;
 
@@ -123,13 +115,10 @@ const FeatureSet = (config) => {
             }
         },
 
-        handleRetrieve: function(e){
-            e.preventDefault();
+        handleRetrieve: function(){
 
             console.log('收到表单值：', this.props.form.getFieldsValue());
-
             this.props.submit(this.props.form.getFieldsValue());
-
         }
     });
     RForm = Form.create()(RForm);
@@ -145,8 +134,8 @@ const FeatureSet = (config) => {
 
             return  CType ?
                     <div className="f-create">
-                        <Button type="primary" onClick={this.showModal}>添加</Button>
-                        <Modal title="添加新对象" visible={this.state.visible} onOk={this.handleSubmit} onCancel={this.hideModal}>
+                        <Button type="primary" icon="plus-circle-o" onClick={this.showModal}>添加</Button>
+                        <Modal title="添加新对象" visible={this.state.visible} onOk={this.handleCreate} onCancel={this.hideModal}>
                             <Form horizontal form={this.props.form}>
                                 { 
                                     CType.map(function(item){
@@ -174,7 +163,7 @@ const FeatureSet = (config) => {
                                 key={item.name}
                                 {...formItemLayout}>
                                 <Input placeholder={item.placeholder||''}
-                                {...getFieldProps(item.name)} />    
+                                {...getFieldProps(item.name, {rules:item.rules})} />    
                             </FormItem>
                     break;
 
@@ -183,16 +172,7 @@ const FeatureSet = (config) => {
                                 label={item.label}
                                 key={item.name}
                                 {...formItemLayout}>
-                                <DatePicker {...getFieldProps(item.name)} />  
-                            </FormItem>
-                    break;
-
-                case 'time':
-                    return <FormItem
-                                label={item.label}
-                                key={item.name}
-                                {...formItemLayout}>
-                                <TimePicker {...getFieldProps(item.name)} />  
+                                <DatePicker showTime format="yyyy-MM-dd HH:mm:ss" {...getFieldProps(item.name)} />  
                             </FormItem>
                     break;
 
@@ -235,10 +215,49 @@ const FeatureSet = (config) => {
                             </FormItem>
                     break;
 
+                case 'image':
+                    let props = {
+                        action: '/upload.do',
+                        listType: 'picture-card'
+                    }
+                    return <FormItem
+                                label={item.label}
+                                key={item.name}
+                                {...formItemLayout}>
+                                <Upload {...props} {...getFieldProps(item.name)}>
+                                    <Icon type="plus" />
+                                    <div className="ant-upload-text">上传图片</div>
+                                </Upload>
+                            </FormItem>
+
+                    break;
+
                 default:
                     return '';
                     break;
             }
+        },
+
+        handleCreate: function(){
+
+            console.log('收到表单值：', this.props.form.getFieldsValue());
+
+            this.props.form.validateFields((errors, values) => {
+                if (!!errors) {
+                    console.log('Errors in form!!!');
+                    return;
+                }else{
+                    console.log('Submit!!!');
+                    this.props.submit(values);
+                    this.hideModal();
+                }
+            });
+            //this.props.submit(this.props.form.getFieldsValue());
+            
+        },
+
+        handleReset: function() {
+            this.props.form.resetFields();
         },
 
         showModal: function() {
@@ -247,23 +266,156 @@ const FeatureSet = (config) => {
 
         hideModal: function() {
             this.setState({ visible: false });
+            this.handleReset();
         }
     });
 
     CForm = Form.create()(CForm);
 
     let UForm = React.createClass({
+        getInitialState: function() {
+            return {
+
+            };
+        },
+
         render: function() {
-            return <div></div>
+            const self = this;
+            const UType = this.props.UType;
+
+            return  UType ?
+                    <div className="f-update">
+                        <Modal title="更新对象" visible={this.props.isShow} onOk={this.handleUpdate} onCancel={this.hideModal}>
+                            <Form horizontal form={this.props.form}>
+                                { 
+                                    UType.map(function(item){
+                                        return self.dealConfigUType(item);
+                                    })
+                                }
+                            </Form>
+                        </Modal>
+                    </div>:
+                    <div></div>
+        },
+
+        dealConfigUType: function(item){
+            const { getFieldProps } = this.props.form;
+
+            const formItemLayout = {
+                labelCol: { span: 6 },
+                wrapperCol: { span: 18 },
+            };
+
+            switch (item.type){
+                case 'string':
+                    return <FormItem
+                                label={item.label}
+                                key={item.name}
+                                {...formItemLayout}>
+                                <Input placeholder={item.placeholder||''}
+                                {...getFieldProps(item.name, {rules:item.rules})} />    
+                            </FormItem>
+                    break;
+
+                case 'date':
+                    return <FormItem
+                                label={item.label}
+                                key={item.name}
+                                {...formItemLayout}>
+                                <DatePicker {...getFieldProps(item.name)} />  
+                            </FormItem>
+                    break;
+
+                case 'select':
+                    return <FormItem
+                                label={item.label}
+                                key={item.name}
+                                {...formItemLayout}>
+                                <Select  {...getFieldProps(item.name, { initialValue: item.defaultValue||item.options[0].value })} >
+                                    {
+                                        item.options.map(function(item){
+                                            return <Option key={item.value} value={item.value}>{item.text}</Option>
+                                        })
+                                    }
+                                </Select>
+                            </FormItem>
+                    break;
+
+                case 'radio':
+                    return <FormItem
+                                label={item.label}
+                                key={item.name}
+                                {...formItemLayout}>
+                                <RadioGroup {...getFieldProps(item.name, { initialValue: item.defaultValue||item.options[0].value })}>
+                                    {
+                                        item.options.map(function(item){
+                                            return <Radio key={item.value} value={item.value}>{item.text}</Radio>
+                                        })
+                                    }
+                                </RadioGroup>
+                            </FormItem>
+                    break;
+
+                case 'switch':
+                    return <FormItem
+                                label={item.label}
+                                key={item.name}
+                                {...formItemLayout}>
+                                <Switch {...getFieldProps(item.name, { initialValue: item.defaultValue|| false })} />
+                            </FormItem>
+                    break;
+
+                case 'image':
+                    let props = {
+                        action: '/upload.do',
+                        listType: 'picture-card'
+                    }
+                    return <FormItem
+                                label={item.label}
+                                key={item.name}
+                                {...formItemLayout}>
+                                <Upload {...props} {...getFieldProps(item.name)}>
+                                    <Icon type="plus" />
+                                    <div className="ant-upload-text">上传图片</div>
+                                </Upload>
+                            </FormItem>
+
+                    break;
+
+                default:
+                    return '';
+                    break;
+            }
+        },
+
+        handleUpdate: function(){
+
+            console.log('收到表单值：', this.props.form.getFieldsValue());
+            this.props.submit(this.props.form.getFieldsValue());
+            
+        },
+
+        handleReset: function() {
+            this.props.form.resetFields();
+        },
+
+        hideModal: function() {
+            this.props.hideForm();
+            this.handleReset();
         }
     });
+
+    UForm = Form.create()(UForm);
     
     let Feature = React.createClass({
         getInitialState: function(){
             return {
                 columns: [],
                 resultList: [],
-                loading: false
+                loading: false,
+
+                updateFromShow: false,
+                updateFromItem: {}
             }
         },
         
@@ -281,7 +433,8 @@ const FeatureSet = (config) => {
             return  <div>
                         <h3 className="f-title">{this.props.title}</h3>
                         <RForm RType={config.RType} submit={self.handleRetrieve}/>
-                        <CForm CType={config.CType} />
+                        <CForm CType={config.CType} submit={self.handleCreate}/>
+                        <UForm UType={config.UType} submit={self.handleUpdate} isShow={this.state.updateFromShow} updateItem={this.state.updateFromItem} hideForm={this.hideUpdateForm}/>
                         <Table dataSource={this.state.resultList} columns={this.state.columns} loading={this.state.loading} bordered/>
                     </div>
         },
@@ -335,6 +488,39 @@ const FeatureSet = (config) => {
             
         },
         
+        handleCreate: function(info){
+            const self = this;
+            self.setState({
+                loading: true
+            });
+            
+            config.Create(info, function(item){
+                let lists = self.state.resultList;
+                lists.unshift(item);
+
+                self.setState({
+                    loading: false,
+                    resultList: lists
+                });
+            });
+        },
+
+        handleUpdate: function(info){
+            const self = this;
+            
+            config.Update(info, function(item){
+                self.setState({
+                    loading: false,
+                    //resultList: list
+                });
+            });
+        },
+        hideUpdateForm: function(){
+            this.setState({
+                updateFromShow: false,
+                updateFromItem: {}
+            });
+        },
         // 搜索更新处理
         handleRetrieve: function(info){
             const self = this;
@@ -353,32 +539,28 @@ const FeatureSet = (config) => {
 
             if(btn.type){
 
-                this.setState({
-                    loading: true
-                });
-
                 let resultList;
                 let type = btn.type;
                 let itemI = Immutable.fromJS(item);
                 let result = Immutable.fromJS(self.state.resultList);
                 
-                if(type === 'create'){
-                    // resultList = result.map(function(v, i){
-                    //     if(v.get('key') === itemI.get('key')){
-                    //         return itemI;
-                    //     }else{
-                    //         return v;
-                    //     }
-                    // });
-                }else if(type === 'retrieve'){
-                    config.Retrieve({}, function(list){
-                        self.setState({
-                            resultList: list
-                        });
+                // if(type === 'create'){
+                // }else if(type === 'retrieve'){
+                // }else if(type === 'update'){
+                // table 操作栏目通用设定为 更新与删除 两项
+                if(type === 'update'){
+                    this.setState({
+                        updateFromShow: true,
+                        updateFromItem: itemI.toJS()
                     });
-                }else if(type === 'update'){
-                    
+                    // config.Update(itemI.toJS(), function(item){
+                        
+                    // });
                 }else if(type === 'delete'){
+                    this.setState({
+                        loading: true
+                    });
+
                     config.Delete(itemI.toJS(), function(list){
                         resultList = result.filter(function(v, i){
                             if(v.get('key') !== itemI.get('key')){

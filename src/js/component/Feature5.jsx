@@ -47,22 +47,13 @@ const conf = {
             type: 'entry_list'
         }).merge({id: data.key});
         
-        // ... 操作添加数据的请求
+        // ... 操作删除请求
         console.log(dataI.toJS());
-
-        let item = {
-            docid: (Math.random()*10000000000)|0,
-            title: '院依法对原省安监局局长陈炎生决定逮捕',
-            link: 'sdfghjcvbnmertfheiuwfhsdh'
-        }
         
-        // 需要设置key
-        item.key = item.docid;
-
-        // 模拟请求创建成功的回调
+        // 模拟请求删除成功的回调
         setTimeout(function(){
-            callback(item);
-        }, 1000);
+            callback();
+        }, 1000)
     },
     Delete: function(data, callback){
     
@@ -109,67 +100,6 @@ const conf = {
         });
     },
 
-    // 创建项目所需的字段
-    // rules 规范可见 https://github.com/yiminghe/async-validator
-    CType:[
-        {
-            name: 'id',
-            label: '唯一标识',
-            type: 'string',
-            placeholder: '请输入标示名称',
-            rules: [{ required: true, min: 5, message: '用户名至少为 5 个字符' }]
-        },{
-            name: 'id2',
-            label: '唯一标识',
-            type: 'string',
-            placeholder: '请输入标示名称',
-            rules: [{ required: true, type: 'email', message: '请输入正确的邮箱地址' }]
-        },{
-            name: 'date',
-            label: '项目开始时间',
-            type: 'date',
-        },{
-            name: 'stype',
-            label: '项目类型Select',
-            type: 'select',
-            defaultValue: 'one',
-            options:[{
-                text: '选项一',
-                value: 'one'
-            },{
-                text: '选项二',
-                value: 'two'
-            },{
-                text: '选项三',
-                value: 'three'
-            }]
-        },{
-            name: 'rtype',
-            label: '项目类型Radio',
-            type: 'radio',
-            defaultValue: 'one',
-            options:[{
-                text: '选项一',
-                value: 'one'
-            },{
-                text: '选项二',
-                value: 'two'
-            },{
-                text: '选项三',
-                value: 'three'
-            }]
-        },{
-            name: 'ischange',
-            label: '是否过滤',
-            type: 'switch'
-        },{
-            name: 'image',
-            label: '背景图片',
-            type: 'image'
-        }
-
-    ],
-
     // 更新项目所需的字段
     UType:[
         {
@@ -181,10 +111,6 @@ const conf = {
             name: 'date',
             label: '项目开始时间',
             type: 'date'
-        },{
-            name: 'time',
-            label: '项目开始时间',
-            type: 'time'
         },{
             name: 'stype',
             label: '项目类型Select',

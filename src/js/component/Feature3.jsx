@@ -62,6 +62,8 @@ const conf = {
 
     
     Retrieve: function(data, callback){
+
+        console.log(data);
         let dataI = Immutable.fromJS({
             type: 'entry_list',
             num: 20,
@@ -99,10 +101,6 @@ const conf = {
             name: 'date',
             label: '项目开始时间',
             type: 'date'
-        },{
-            name: 'time',
-            label: '项目开始时间',
-            type: 'time'
         },{
             name: 'stype',
             label: '项目类型Select',
