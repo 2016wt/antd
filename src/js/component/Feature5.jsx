@@ -103,54 +103,33 @@ const conf = {
     // 更新项目所需的字段
     UType:[
         {
-            name: 'id',
+            name: 'docid',
             label: '唯一标识',
             type: 'string',
             placeholder: '请输入标示名称'
         },{
+            name: 'title',
+            label: '标题',
+            type: 'string',
+            placeholder: '请输入标示名称'
+        },{
+            name: 'link',
+            label: '链接',
+            type: 'string'
+        },{
             name: 'date',
-            label: '项目开始时间',
+            label: '日期',
             type: 'date'
         },{
-            name: 'stype',
-            label: '项目类型Select',
-            type: 'select',
-            defaultValue: 'one',
-            options:[{
-                text: '选项一',
-                value: 'one'
-            },{
-                text: '选项二',
-                value: 'two'
-            },{
-                text: '选项三',
-                value: 'three'
-            }]
-        },{
-            name: 'rtype',
-            label: '项目类型Radio',
-            type: 'radio',
-            defaultValue: 'one',
-            options:[{
-                text: '选项一',
-                value: 'one'
-            },{
-                text: '选项二',
-                value: 'two'
-            },{
-                text: '选项三',
-                value: 'three'
-            }]
-        },{
-            name: 'ischange',
-            label: '是否过滤',
-            type: 'switch'
+            name: 'img',
+            label: '图片',
+            type: 'imageUpload'
         }
 
     ],
 
 
-
+    // table 列表头标题
     columns: [
         {
             title: 'DOCID',     // table header 文案
@@ -165,8 +144,21 @@ const conf = {
         }, {
             title: '链接',
             dataIndex: 'link',
-            type: 'link'
-        }, {
+            type: 'link',
+            render: (text) => ( <span>
+                                    <a href={text}>链接</a>
+                                </span>),
+            width: 50
+        },{
+            title: '日期',
+            dataIndex: 'date',
+            type: 'string',
+            width: 150
+        },{
+            title: '图片',
+            dataIndex: 'img',
+            type: 'image'
+        },{
             title: '操作',
             type: 'operate',    // 操作的类型必须为 operate
             width: 120,
@@ -181,17 +173,7 @@ const conf = {
                 callback: function(item){
                     console.log(item)
                 }
-            }], // 可选
-            
-            // 对应btns 的回调函数 
-            // item为操作的单一数据对象  
-            // callback 为组件的回调函数，将处理之后的数据回传 删除则传undefined
-            // callbacks: [function(item, callback){
-            //     item.docid = 0;
-            //     callback(item, 'update');
-            // },function(item, callback){
-            //     callback(item, 'delete');
-            // }]
+            }] // 可选
         }
     ],
 

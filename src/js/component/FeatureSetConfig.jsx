@@ -5,6 +5,8 @@ import { Table, Form, Select, Input, Row, Col, Button, Icon } from 'antd';
 import { DatePicker, TimePicker, Radio, Switch} from 'antd';
 import { Upload, Modal } from 'antd';
 
+import { Link } from 'react-router';
+
 import Immutable from 'immutable';
 //https://github.com/ded/reqwest
 import Reqwest from 'reqwest';
@@ -282,6 +284,7 @@ const FeatureSet = (config) => {
         render: function() {
             const self = this;
             const UType = this.props.UType;
+            const updateItem = this.props.updateItem;
 
             return  UType ?
                     <div className="f-update">
@@ -289,7 +292,8 @@ const FeatureSet = (config) => {
                             <Form horizontal form={this.props.form}>
                                 { 
                                     UType.map(function(item){
-                                        return self.dealConfigUType(item);
+                                        const defaultValue = updateItem[item.name]||'';
+                                        return self.dealConfigUType(item, defaultValue);
                                     })
                                 }
                             </Form>
@@ -298,8 +302,9 @@ const FeatureSet = (config) => {
                     <div></div>
         },
 
-        dealConfigUType: function(item){
+        dealConfigUType: function(item, defaultValue){
             const { getFieldProps } = this.props.form;
+            defaultValue = defaultValue || '';
 
             const formItemLayout = {
                 labelCol: { span: 6 },
@@ -313,7 +318,7 @@ const FeatureSet = (config) => {
                                 key={item.name}
                                 {...formItemLayout}>
                                 <Input placeholder={item.placeholder||''}
-                                {...getFieldProps(item.name, {rules:item.rules})} />    
+                                {...getFieldProps(item.name, {rules:item.rules, initialValue:defaultValue})} />    
                             </FormItem>
                     break;
 
@@ -322,7 +327,7 @@ const FeatureSet = (config) => {
                                 label={item.label}
                                 key={item.name}
                                 {...formItemLayout}>
-                                <DatePicker {...getFieldProps(item.name)} />  
+                                <DatePicker showTime format="yyyy-MM-dd HH:mm:ss" {...getFieldProps(item.name, { initialValue:defaultValue})} />  
                             </FormItem>
                     break;
 
@@ -331,7 +336,7 @@ const FeatureSet = (config) => {
                                 label={item.label}
                                 key={item.name}
                                 {...formItemLayout}>
-                                <Select  {...getFieldProps(item.name, { initialValue: item.defaultValue||item.options[0].value })} >
+                                <Select  {...getFieldProps(item.name, { initialValue: defaultValue })} >
                                     {
                                         item.options.map(function(item){
                                             return <Option key={item.value} value={item.value}>{item.text}</Option>
@@ -346,7 +351,7 @@ const FeatureSet = (config) => {
                                 label={item.label}
                                 key={item.name}
                                 {...formItemLayout}>
-                                <RadioGroup {...getFieldProps(item.name, { initialValue: item.defaultValue||item.options[0].value })}>
+                                <RadioGroup {...getFieldProps(item.name, { initialValue: defaultValue })}>
                                     {
                                         item.options.map(function(item){
                                             return <Radio key={item.value} value={item.value}>{item.text}</Radio>
@@ -361,14 +366,18 @@ const FeatureSet = (config) => {
                                 label={item.label}
                                 key={item.name}
                                 {...formItemLayout}>
-                                <Switch {...getFieldProps(item.name, { initialValue: item.defaultValue|| false })} />
+                                <Switch {...getFieldProps(item.name, { initialValue: defaultValue})} />
                             </FormItem>
                     break;
 
-                case 'image':
+                case 'imageUpload':
                     let props = {
                         action: '/upload.do',
-                        listType: 'picture-card'
+                        listType: 'picture-card',
+                        // defaultFileList:[{
+                        //     url: defaultValue,
+                        //     status: 'done'
+                        // }]
                     }
                     return <FormItem
                                 label={item.label}
