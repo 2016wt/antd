@@ -170,59 +170,6 @@ const conf = {
 
     ],
 
-    // 更新项目所需的字段
-    UType:[
-        {
-            name: 'id',
-            label: '唯一标识',
-            type: 'string',
-            placeholder: '请输入标示名称'
-        },{
-            name: 'date',
-            label: '项目开始时间',
-            type: 'date'
-        },{
-            name: 'time',
-            label: '项目开始时间',
-            type: 'time'
-        },{
-            name: 'stype',
-            label: '项目类型Select',
-            type: 'select',
-            defaultValue: 'one',
-            options:[{
-                text: '选项一',
-                value: 'one'
-            },{
-                text: '选项二',
-                value: 'two'
-            },{
-                text: '选项三',
-                value: 'three'
-            }]
-        },{
-            name: 'rtype',
-            label: '项目类型Radio',
-            type: 'radio',
-            defaultValue: 'one',
-            options:[{
-                text: '选项一',
-                value: 'one'
-            },{
-                text: '选项二',
-                value: 'two'
-            },{
-                text: '选项三',
-                value: 'three'
-            }]
-        },{
-            name: 'ischange',
-            label: '是否过滤',
-            type: 'switch'
-        }
-
-    ],
-
 
 
     columns: [
@@ -245,9 +192,6 @@ const conf = {
             type: 'operate',    // 操作的类型必须为 operate
             width: 120,
             btns: [{
-                text: '更新',
-                type: 'update'
-            },{
                 text: '删除',
                 type: 'delete'
             }, {

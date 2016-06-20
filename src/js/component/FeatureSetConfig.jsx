@@ -398,10 +398,7 @@ const FeatureSet = (config) => {
         },
 
         handleUpdate: function(){
-
-            console.log('收到表单值：', this.props.form.getFieldsValue());
             this.props.submit(this.props.form.getFieldsValue());
-            
         },
 
         handleReset: function() {
