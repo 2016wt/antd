@@ -1,7 +1,7 @@
 // 含有可操作 table 栏的数据展示
 import React from 'react';
 
-import FeatureSetConfig from './FeatureSetConfig';
+import FeatureSetConfig from '../component/FeatureSetConfig';
 
 import Immutable from 'immutable';
 //https://github.com/ded/reqwest

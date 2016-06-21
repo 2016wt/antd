@@ -1,17 +1,16 @@
 // 纯数据展现情况列表
 import React from 'react';
 
-import FeatureSetConfig from './FeatureSetConfig';
+import FeatureSetConfig from '../component/FeatureSetConfig';
 
 import Immutable from 'immutable';
-//https://github.com/ded/reqwest
 import Reqwest from 'reqwest';
 
 // 增加(Create)、重新取得数据(Retrieve)、更新(Update)和删除(Delete)
 const conf = {
     
-    // CRUD 接口配置 
-    // data 传入接口的参数  
+    // 初始化展现的数据，使用callback 回传列表数据
+    // 需要手动添加唯一id key
     // callback 组件数据的回调函数(接受列表数据参数)
     initData: function(callback){
 
@@ -43,7 +42,16 @@ const conf = {
            
     },
         
-
+    // table 列表展现配置
+    // {
+    //      title       table显示表题
+    //      dataIndex   显示数据中的key
+    //      type        展现形式 （string image link）
+    //      render      自定义展现形式 参数 （当前数据，当前对象数据）
+    //      sort        是否需要排序功能
+    //      width       自定义该列宽度 否则等分
+    // }
+    // 
     columns: [
         {
             title: 'DOCID',
