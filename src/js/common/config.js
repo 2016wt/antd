@@ -16,7 +16,7 @@
  * main  功能区域配置
  *     components   Object  配置sider对应功能区域组件
  *         Feature1     Object  对应sider menu 中的功能key对 应功能组件
- *             
+ *     style        Object  配置样式
  */
 
 const Config = {
@@ -58,8 +58,7 @@ const Config = {
                 items: [
                     {title: "选项4", key: "Feature4"}
                 ]
-            },
-            {
+            },{
                 title: "选项5",
                 key: "Feature5"
             }
@@ -93,7 +92,7 @@ const Config = {
             },
             "Feature6": {
                 title: '这是功能区域标题6',
-                component: require('../feature/Feature2')
+                component: require('../feature/Feature6')
             },
             "Feature7": {
                 title: '这是功能区域标题7',
