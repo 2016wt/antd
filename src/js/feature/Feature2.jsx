@@ -81,7 +81,7 @@ const conf = {
             }, {
                 text: '展示',
                 callback: function(item){
-                    console.log(item)
+                    alert(JSON.stringify(item));
                 }
             }], // 可选
             

@@ -63,7 +63,7 @@ const Config = {
                 key: "Feature5"
             }
         ],
-        openKeys:["subTitle1", "subTitle2"],
+        openKeys:["subTitle1", "subTitle2", "subTitle3"],
         selectedKey: "Feature1",
         style: {}
     },
@@ -96,7 +96,7 @@ const Config = {
             },
             "Feature7": {
                 title: '这是功能区域标题7',
-                component: require('../feature/Feature2')
+                component: require('../feature/Feature7')
             },
             "Feature8": {
                 title: '这是功能区域标题8',
