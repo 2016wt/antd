@@ -288,7 +288,9 @@ const conf = {
         }
     ],
 
-    uploadfile: '/umis/pushc/uploadfile'
+    uploadfile: function(data){
+        
+    }
 
 };
 

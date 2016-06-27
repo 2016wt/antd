@@ -72,6 +72,7 @@ const conf = {
     },
     Update:function(data, callback){
         console.log(data);
+        callback(data);
     },
     Retrieve: function(data, callback){
         let dataI = Immutable.fromJS({
