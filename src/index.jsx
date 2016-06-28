@@ -4,7 +4,7 @@ import './css/style';
 // js
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Router, Route, hashHistory, Link } from 'react-router';
+import { Router, Route, hashHistory, Link, IndexRoute } from 'react-router';
 
 import Header from './js/component/Header';
 import Sider from './js/component/Sider';
@@ -26,8 +26,6 @@ const App = React.createClass({
         this.setState({selectedKey: value});
     },
     render: function(){
-        const Main = config.main.components[this.state.selectedKey].component;
-        const title = config.main.components[this.state.selectedKey].title;
 		return  <div>
                     <Header />
 
@@ -36,13 +34,16 @@ const App = React.createClass({
                             <Sider change={this.siderChangeKey}/>
                         </aside>
                         <section className="main-container">
-                            <Main title={title}/>
+                            {this.props.children}
                         </section>
                     </div>
                 </div>
 	},
 
-    componentDidMount: function(){},
+    componentDidMount: function(){
+        //this.setState({selectedKey: this.props.params.FeatureId});
+        //console.log(this.props.params.FeatureId)
+    },
     componentWillReceiveProps: function(newProps){},
     shouldComponentUpdate: function(){
         return true;
@@ -51,9 +52,22 @@ const App = React.createClass({
     componentDidUpdate: function(){},
     componentWillUnmount: function(){}
 });
+const Main = React.createClass({
+    render: function(){
+        const id = this.props.params.FeatureId;
+        const Data = config.main.components[id] || config.main.components[config.sider.selectedKey];
+        const Feature = Data.component;
+        const title = Data.title;
+
+        return  <Feature key={id} title={title}/>
+    }
+});
 
 ReactDom.render((
     <Router history={hashHistory}>
-        <Route path="/" component={App}/>
+        <Route path="/" component={App}>
+            <IndexRoute component={Main} />
+            <Route path="/:FeatureId" component={Main} />
+        </Route>
     </Router>
 ), document.getElementById('react-content'));

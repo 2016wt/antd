@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
+import { Link } from 'react-router'
 
 import config from '../common/config';
 
@@ -47,7 +48,9 @@ const Sider = React.createClass({
                     }
                 </Menu.SubMenu>
             }else{
-                return <Menu.Item key={item.key}>{item.title}</Menu.Item>
+                return <Menu.Item key={item.key}>
+                            <Link to={'/'+item.key}>{item.title}</Link>
+                        </Menu.Item>
             }
         });
     }
