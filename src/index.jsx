@@ -16,22 +16,17 @@ const App = React.createClass({
 	getDefaultProps: function(){
     },
     getInitialState: function(){
-        return {
-            selectedKey: config.sider.selectedKey
-        }
+        return {}
     },
     componentWillMount: function(){},
 
-    siderChangeKey: function(value){
-        this.setState({selectedKey: value});
-    },
     render: function(){
 		return  <div>
                     <Header />
 
                     <div className="main-wrapper">
                         <aside className="aside-container">
-                            <Sider change={this.siderChangeKey}/>
+                            <Sider selectedKey={this.props.params.FeatureId || config.sider.selectedKey}/>
                         </aside>
                         <section className="main-container">
                             {this.props.children}
@@ -41,8 +36,6 @@ const App = React.createClass({
 	},
 
     componentDidMount: function(){
-        //this.setState({selectedKey: this.props.params.FeatureId});
-        //console.log(this.props.params.FeatureId)
     },
     componentWillReceiveProps: function(newProps){},
     shouldComponentUpdate: function(){

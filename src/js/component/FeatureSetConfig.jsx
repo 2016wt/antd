@@ -136,11 +136,22 @@ const FeatureSet = (config) => {
 
         handleUpdate: function(info){
             const self = this;
-            
+            let result = Immutable.fromJS(self.state.resultList);
+
             config.Update(info, function(item){
+                let resultList = result.map(function(v, i){
+                    if(v.get('key') === item.key){
+                        return Immutable.fromJS(item);
+                    }else{
+                        return v;
+                    }
+                });
+                message.success('更新成功');
+                
                 self.setState({
                     loading: false,
-                    //resultList: list
+                    updateFromShow: false,
+                    resultList: resultList.toJS()
                 });
             });
         },
@@ -182,21 +193,6 @@ const FeatureSet = (config) => {
                     this.setState({
                         updateFromShow: true,
                         updateFromItem: itemI.toJS()
-                    });
-                    config.Update(itemI.toJS(), function(item){
-                        resultList = result.filter(function(v, i){
-                            if(v.get('key') === itemI.get('key')){
-                                return Immutable.fromJS(item);
-                            }else{
-                                
-                            }
-                        });
-                        message.success('更新成功');
-                        
-                        self.setState({
-                            loading: false,
-                            resultList: resultList.toJS()
-                        });
                     });
                 }else if(type === 'delete'){
                     this.setState({

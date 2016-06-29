@@ -14,15 +14,13 @@ const Sider = React.createClass({
     },
     getInitialState: function(){
         return {
-            selectedKeys: config.sider.selectedKey
+            selectedKeys: this.props.selectedKey
         };
     },
     handleClick: function(e) {
         this.setState({
             selectedKeys: e.key
         });
-
-        this.props.change(e.key);
     },
     render: function() {
 

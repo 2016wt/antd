@@ -72,6 +72,7 @@ const conf = {
     },
     Update:function(data, callback){
         console.log(data);
+        data.key = data.docid;
         callback(data);
     },
     Retrieve: function(data, callback){
