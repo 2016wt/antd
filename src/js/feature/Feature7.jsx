@@ -59,7 +59,7 @@ const Feature7 = React.createClass({
         //         console.error(err);
         //     });
 
-        client.putObjectFromString("mbrowser", key,  blob, options)
+        client.putObjectFromBlob("mbrowser", key,  blob, options)
             .then(function (res) {
                 // 上传完成，添加您的代码
                 console.log('上传成功');

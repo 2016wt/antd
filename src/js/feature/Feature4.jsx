@@ -165,7 +165,7 @@ const conf = {
         },{
             name: 'image',
             label: '背景图片',
-            type: 'image'
+            type: 'imageUpload'
         }
 
     ],

@@ -10,10 +10,11 @@ import { Link } from 'react-router';
 import Immutable from 'immutable';
 import Reqwest from 'reqwest';
 
+import CFormItem from './CreateFormItem';
 // 搜索查询栏form 创建新item-form 更新form 
-import UForm from './UpdateFrom';
-import CForm from './CreateFrom';
-import RForm from './RetrieveFrom';
+import UForm from './UpdateForm';
+import CForm from './CreateForm';
+import RForm from './RetrieveForm';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -23,20 +24,7 @@ const RadioGroup = Radio.Group;
 // 依赖 config 主题生成react 组件函数
 const FeatureSet = (config) => {
     
-    // columns 类型对应的通用痛render
-    const renderFunc = {
-        link: (text) => (
-                <span>
-                    <a href={text}>{text}</a>
-                </span>),
-
-        image: (url) => (
-                <span>
-                    <img src={url} />
-                </span>)
-    }
-    
-    let Feature = React.createClass({
+    let tableFeature = React.createClass({
         getInitialState: function(){
             return {
                 columns: [],
@@ -103,7 +91,7 @@ const FeatureSet = (config) => {
                                 </span>
                     };
                 }else{
-                    column.render = item.render || renderFunc[item.type] || ((text) => (<span>{text}</span>));
+                    column.render = item.render || self.renderFunc[item.type] || ((text) => (<span>{text}</span>));
                 }
 
                 if(item.sort){
@@ -115,6 +103,19 @@ const FeatureSet = (config) => {
             
             return columns;
             
+        },
+        
+        // columns 类型对应的通用痛render
+        renderFunc: {
+            link: (text) => (
+                    <span>
+                        <a href={text}>{text}</a>
+                    </span>),
+
+            image: (url) => (
+                    <span>
+                        <img src={url} />
+                    </span>)
         },
         
         handleCreate: function(info){
@@ -229,12 +230,80 @@ const FeatureSet = (config) => {
                     resultList: list
                 });
             });
-
-            
-        },
+        }
     });
 
-    return Feature;
+    let simpleFeature = React.createClass({
+        getInitialState: function(){
+            return {
+                item:{},
+    
+                updateFromShow: false,
+                updateFromItem: {}
+            }
+        },
+        
+        componentWillMount: function(){
+        },
+
+        render: function() {
+            const self = this;
+            const itemInfo = this.state.item;
+
+            const { getFieldProps } = this.props.form;
+            const formItemLayout = {
+                labelCol: { span: 3 },
+                wrapperCol: { span: 18 },
+            };
+
+            return  <div>
+                        <h3 className="f-title">{this.props.title}</h3>
+                        <Form horizontal  form={this.props.form}>
+                            { 
+                                config.UType.map(function(item){
+                                    item.defaultValue = itemInfo[item.name]||'';
+                                    return <CFormItem key={item.name} getFieldProps={getFieldProps} formItemLayout={formItemLayout} item={item}/>
+                                })
+                            }
+                        </Form>
+                    </div>
+        },
+
+        componentDidMount: function(){
+            const self = this;
+            
+            config.initData(function(item){
+                self.setState({
+                    item: item
+                });
+            });
+        }
+    });
+
+    simpleFeature = Form.create()(simpleFeature);
+    
+
+    switch (config.type){
+        case 'tableList':
+            return tableFeature;
+            break;
+
+        case 'graphList':
+            return graphFeature;
+            break;
+            
+        case 'simpleObject':
+            return simpleFeature;
+            break;
+            
+        case 'complexObject':
+            return complexFeature;
+            break;
+
+        default:
+            return tableFeature;
+            break;
+    }
 }
 
 

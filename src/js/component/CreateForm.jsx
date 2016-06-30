@@ -1,31 +1,32 @@
 import React from 'react';
-import { Form, Select, Input, Button, Icon , DatePicker, TimePicker, Radio, Switch} from 'antd';
-import { Upload, Modal, message } from 'antd';
+import { Form, Modal, Button } from 'antd';
 
-const FormItem = Form.Item;
-const Option = Select.Option;
-const RadioGroup = Radio.Group;
+import CFormItem from './CreateFormItem';
 
-let UForm = React.createClass({
+let CForm = React.createClass({
     getInitialState: function() {
-        return {
-
-        };
+        return { visible: false };
     },
 
     render: function() {
         const self = this;
-        const UType = this.props.UType;
-        const updateItem = this.props.updateItem;
+        const CType = this.props.CType;
 
-        return  UType ?
-                <div className="f-update">
-                    <Modal title="更新对象" visible={this.props.isShow} onOk={this.handleUpdate} onCancel={this.hideModal}>
+        const { getFieldProps } = this.props.form;
+        const formItemLayout = {
+            labelCol: { span: 6 },
+            wrapperCol: { span: 18 },
+        };
+
+        return  CType ?
+                <div className="f-create">
+                    <Button type="primary" icon="plus-circle-o" onClick={this.showModal}>添加</Button>
+                    <Modal title="添加新对象" visible={this.state.visible} onOk={this.handleCreate} onCancel={this.hideModal}>
                         <Form horizontal form={this.props.form}>
                             { 
-                                UType.map(function(item){
-                                    const defaultValue = updateItem[item.name]||'';
-                                    return self.dealConfigUType(item, defaultValue);
+                                CType.map(function(item){
+                                    //return self.dealConfigCType(item);
+                                    return <CFormItem key={item.name} getFieldProps={getFieldProps} formItemLayout={formItemLayout} item={item}/>
                                 })
                             }
                         </Form>
@@ -34,9 +35,8 @@ let UForm = React.createClass({
                 <div></div>
     },
 
-    dealConfigUType: function(item, defaultValue){
+    dealConfigCType: function(item){
         const { getFieldProps } = this.props.form;
-        defaultValue = defaultValue || '';
 
         const formItemLayout = {
             labelCol: { span: 6 },
@@ -50,7 +50,7 @@ let UForm = React.createClass({
                             key={item.name}
                             {...formItemLayout}>
                             <Input placeholder={item.placeholder||''}
-                            {...getFieldProps(item.name, {rules:item.rules, initialValue:defaultValue})} />    
+                            {...getFieldProps(item.name, {rules:item.rules})} />    
                         </FormItem>
                 break;
 
@@ -59,7 +59,7 @@ let UForm = React.createClass({
                             label={item.label}
                             key={item.name}
                             {...formItemLayout}>
-                            <DatePicker showTime format="yyyy-MM-dd HH:mm:ss" {...getFieldProps(item.name, { initialValue:defaultValue})} />  
+                            <DatePicker showTime format="yyyy-MM-dd HH:mm:ss" {...getFieldProps(item.name)} />  
                         </FormItem>
                 break;
 
@@ -68,7 +68,7 @@ let UForm = React.createClass({
                             label={item.label}
                             key={item.name}
                             {...formItemLayout}>
-                            <Select  {...getFieldProps(item.name, { initialValue: defaultValue })} >
+                            <Select  {...getFieldProps(item.name, { initialValue: item.defaultValue||item.options[0].value })} >
                                 {
                                     item.options.map(function(item){
                                         return <Option key={item.value} value={item.value}>{item.text}</Option>
@@ -83,7 +83,7 @@ let UForm = React.createClass({
                             label={item.label}
                             key={item.name}
                             {...formItemLayout}>
-                            <RadioGroup {...getFieldProps(item.name, { initialValue: defaultValue })}>
+                            <RadioGroup {...getFieldProps(item.name, { initialValue: item.defaultValue||item.options[0].value })}>
                                 {
                                     item.options.map(function(item){
                                         return <Radio key={item.value} value={item.value}>{item.text}</Radio>
@@ -98,18 +98,14 @@ let UForm = React.createClass({
                             label={item.label}
                             key={item.name}
                             {...formItemLayout}>
-                            <Switch {...getFieldProps(item.name, { initialValue: defaultValue})} />
+                            <Switch {...getFieldProps(item.name, { initialValue: item.defaultValue|| false })} />
                         </FormItem>
                 break;
 
-            case 'imageUpload':
+            case 'image':
                 let props = {
                     action: '/upload.do',
-                    listType: 'picture-card',
-                    // defaultFileList:[{
-                    //     url: defaultValue,
-                    //     status: 'done'
-                    // }]
+                    listType: 'picture-card'
                 }
                 return <FormItem
                             label={item.label}
@@ -129,19 +125,37 @@ let UForm = React.createClass({
         }
     },
 
-    handleUpdate: function(){
-        this.props.submit(this.props.form.getFieldsValue());
+    handleCreate: function(){
+
+        console.log('收到表单值：', this.props.form.getFieldsValue());
+
+        this.props.form.validateFields((errors, values) => {
+            if (!!errors) {
+                console.log('Errors in form!!!');
+                return;
+            }else{
+                console.log('Submit!!!');
+                this.props.submit(values);
+                this.hideModal();
+            }
+        });
+        //this.props.submit(this.props.form.getFieldsValue());
+        
     },
 
     handleReset: function() {
         this.props.form.resetFields();
     },
 
+    showModal: function() {
+        this.setState({ visible: true });
+    },
+
     hideModal: function() {
-        this.props.hideForm();
+        this.setState({ visible: false });
         this.handleReset();
     }
 });
-UForm = Form.create()(UForm);
+CForm = Form.create()(CForm);
 
-export default UForm;
+export default CForm;
