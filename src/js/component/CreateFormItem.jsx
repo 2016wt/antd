@@ -2,6 +2,8 @@ import React from 'react';
 import { Form, Select, Input, Button, Icon , DatePicker, TimePicker, Radio, Switch} from 'antd';
 import { Upload, Modal, message } from 'antd';
 
+import BDUploader from './BDUploader';
+
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -9,7 +11,7 @@ const RadioGroup = Radio.Group;
 let CFormItem = React.createClass({
     getInitialState: function() {
         return {
-
+            img_url:''
         };
     },
 
@@ -18,7 +20,8 @@ let CFormItem = React.createClass({
         const formItemLayout = this.props.formItemLayout || {};
         const item = this.props.item || {};
         const defaultValue = item.defaultValue || '';
-        console.log(item.type)
+        const defaultImgValue = this.state.img_url || item.defaultValue || '';
+
         switch (item.type){
             case 'string':
                 return <FormItem
@@ -79,22 +82,14 @@ let CFormItem = React.createClass({
                 break;
 
             case 'imageUpload':
-                let props = {
-                    action: '/upload.do',
-                    listType: 'picture-card',
-                    // defaultFileList:[{
-                    //     url: defaultValue,
-                    //     status: 'done'
-                    // }]
-                }
                 return <FormItem
                             label={item.label}
                             key={item.name}
                             {...formItemLayout}>
-                            <Upload {...props} {...getFieldProps(item.name)}>
-                                <Icon type="plus" />
-                                <div className="ant-upload-text">上传图片</div>
-                            </Upload>
+                            <Input
+                            {...getFieldProps(item.name, { initialValue:defaultImgValue})} /> 
+                            <img className="uploadImg" src={defaultImgValue} />
+                            <BDUploader success={this.uploadSuccess} />
                         </FormItem>
 
                 break;
@@ -103,6 +98,12 @@ let CFormItem = React.createClass({
                 return '';
                 break;
         }
+    },
+    uploadSuccess: function(url){
+        console.log(url)
+        this.setState({
+            img_url: url
+        })
     }
 });
 
