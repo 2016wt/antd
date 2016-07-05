@@ -211,9 +211,7 @@ const conf = {
             //     callback(item, 'delete');
             // }]
         }
-    ],
-
-    uploadfile: '/umis/pushc/uploadfile'
+    ]
 
 };
 

@@ -99,31 +99,55 @@ const simple_conf = {
        }, 1000)
     },
 
-    UType:[
+    columns:[
         {
-            name: 'docid',
+            dataIndex: 'docid',
             label: '唯一标识',
-            type: 'string',
-            placeholder: '请输入标示名称'
+            type: 'dataIndex',
         },{
-            name: 'title',
+            dataIndex: 'title',
             label: '标题',
             type: 'string',
-            placeholder: '请输入标示名称'
         },{
-            name: 'link',
+            dataIndex: 'link',
             label: '链接',
             type: 'string'
         },{
-            name: 'date',
+            dataIndex: 'date',
             label: '日期',
-            type: 'date'
+            type: 'string'
         },{
-            name: 'img',
+            dataIndex: 'img',
             label: '图片',
-            type: 'imageUpload'
+            type: 'image'
         }
-    ]
+    ],
+
+    // UType:[
+    //     {
+    //         name: 'docid',
+    //         label: '唯一标识',
+    //         type: 'string',
+    //         placeholder: '请输入标示名称'
+    //     },{
+    //         name: 'title',
+    //         label: '标题',
+    //         type: 'string',
+    //         placeholder: '请输入标示名称'
+    //     },{
+    //         name: 'link',
+    //         label: '链接',
+    //         type: 'string'
+    //     },{
+    //         name: 'date',
+    //         label: '日期',
+    //         type: 'date'
+    //     },{
+    //         name: 'img',
+    //         label: '图片',
+    //         type: 'imageUpload'
+    //     }
+    // ]
 }
 
 const Feature1 = FeatureSetConfig(simple_conf);
