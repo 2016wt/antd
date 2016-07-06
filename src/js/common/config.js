@@ -33,6 +33,16 @@ const Config = {
     sider: {
         menu: [
             {
+                title: "数据展示项",
+                key: "dataShow",
+                icon: "bars",
+                items: [
+                    {title: "table数据展示项", key: "Feature1-1"},
+                    {title: "simple对象数据展示项", key: "Feature1-2"},
+                    {title: "数据可视化展示项", key: "Feature1-3"}
+                ]
+            },
+            {
                 title: "导航1",
                 key: "subTitle1",
                 icon: "setting",
@@ -63,13 +73,26 @@ const Config = {
                 key: "Feature5"
             }
         ],
-        openKeys:["subTitle1", "subTitle2", "subTitle3"],
+        openKeys:['dataShow'],
         selectedKey: "Feature1",
         style: {}
     },
 
     main: {
         components: {
+            "Feature1-1": {
+                title: 'table 数据展示',
+                component: require('../feature/Feature1-1')
+            }, 
+            "Feature1-2": {
+                title: 'simple对象 数据展示',
+                component: require('../feature/Feature1-2')
+            }, 
+            "Feature1-3": {
+                title: '数据可视化 数据展示',
+                component: require('../feature/Feature1-3')
+            }, 
+
             "Feature1": {
                 title: '这是功能区域标题1',
                 component: require('../feature/Feature1')

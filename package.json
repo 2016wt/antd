@@ -9,6 +9,7 @@
     "atool-build": "0.4.x",
     "babel-plugin-antd": "^0.1.2",
     "bce-sdk-js": "^0.1.7",
+    "echarts-for-react": "^1.1.2",
     "es3ify-loader": "^0.1.0",
     "history": "^2.1.1",
     "immutable": "^3.8.1",

@@ -66,11 +66,14 @@ const table_conf = {
     //      width       自定义该列宽度 否则等分
     // }
     // 
+    // table 列表头标题
     columns: [
         {
-            title: 'DOCID',
-            dataIndex: 'docid',
-            type: 'string'
+            title: 'DOCID',     // table header 文案
+            dataIndex: 'docid', // 数据对象内的属性，也做react vdom 的key
+            type: 'string',     // table 内显示的类型
+            sort: true,         // 是否需要排序
+            width:200
         }, {
             title: '标题',
             dataIndex: 'title',
@@ -79,70 +82,24 @@ const table_conf = {
             title: '链接',
             dataIndex: 'link',
             type: 'link',
-            render: (text, item) => (<span><a href={text}>{item.title}</a></span>)   // 可自定义
+            render: (text) => ( <span>
+                                    <a href={text}>链接</a>
+                                </span>),
+            width: 50
+        },{
+            title: '日期',
+            dataIndex: 'date',
+            type: 'string',
+            width: 150
+        },{
+            title: '图片',
+            dataIndex: 'img',
+            type: 'image'
         }
     ]
 
 };
 
-const simple_conf = {
-    
-    type: 'simpleObject',
-
-    initData: function(callback){
-       // 模拟数据
-       setTimeout(function(){
-            let object = testData.simpleObject;
-            object.key = object.docid;
-
-            callback(object);
-       }, 1000)
-    },
-
-    operate:[
-        {
-            text: '确认数据',
-            style: {
-                'margin-right': '30px'
-            },
-            callback: function(item){
-                console.log(item)
-            }
-        }, {
-            text: '展示数据',
-            callback: function(item){
-                console.log(item)
-            }
-        }
-    ],
-
-    UType:[
-        {
-            name: 'docid',
-            label: '唯一标识',
-            type: 'string',
-            placeholder: '请输入标示名称'
-        },{
-            name: 'title',
-            label: '标题',
-            type: 'string',
-            placeholder: '请输入标示名称'
-        },{
-            name: 'link',
-            label: '链接',
-            type: 'string'
-        },{
-            name: 'date',
-            label: '日期',
-            type: 'date'
-        },{
-            name: 'img',
-            label: '图片',
-            type: 'imageUpload'
-        }
-    ]
-}
-
-const Feature1 = FeatureSetConfig(simple_conf);
+const Feature1 = FeatureSetConfig(table_conf);
 
 export default Feature1;
