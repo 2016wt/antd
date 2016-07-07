@@ -48,8 +48,7 @@ const FeatureSet = (config) => {
         render: function() {
             const self = this;
             
-            return  <div>
-                        <h3 className="f-title">{this.props.title}</h3>
+            return  <div className="featureItem">
                         <RForm RType={config.RType} submit={self.handleRetrieve}/>
                         <CForm CType={config.CType} submit={self.handleCreate}/>
                         <UForm UType={config.UType} submit={self.handleUpdate} isShow={this.state.updateFromShow} updateItem={this.state.updateFromItem} hideForm={this.hideUpdateForm}/>
@@ -260,8 +259,7 @@ const FeatureSet = (config) => {
 
             const operate = config.operate || [];
 
-            return  <div>
-                        <h3 className="f-title">{this.props.title}</h3>
+            return  <div className="featureItem"> 
                         <Form horizontal className='p-relative'>
                             {
                                 this.state.loading?
@@ -345,11 +343,10 @@ const FeatureSet = (config) => {
 
             const operate = config.operate || [];
 
-            return  <div>
-                        <h3 className="f-title">{this.props.title}</h3>
+            return  <div className="featureItem">
                         <ReactEcharts
                             option={this.state.option} 
-                            style={{height: '350px', width: '100%'}} 
+                            style={config.EchartStyle} 
                             className='react_for_echarts' />
                     </div>
         },
@@ -358,8 +355,8 @@ const FeatureSet = (config) => {
             const self = this;
             let option = Immutable.fromJS(self.state.option).toJS();
 
-            config.initData(function(list){
-                option.series = list;
+            config.initData(function(series){
+                option.series = series;
                 self.setState({
                     option: option
                 });

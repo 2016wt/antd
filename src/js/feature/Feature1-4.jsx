@@ -74,7 +74,7 @@ const graph_conf = {
 const graph_conf2 = {
     
     type: 'graphList', // tableList graphList simpleObject complexObject 
-    style: {
+    EchartStyle: {
         width: '100%',
         height: '450px'
     },
@@ -133,6 +133,71 @@ const graph_conf2 = {
 
 };
 
-const Feature = FeatureSetConfig(graph_conf2);
+const table_conf = {
+    
+    type: 'tableList', // tableList graphList simpleObject complexObject 
+
+    // 初始化展现的数据，使用callback 回传列表数据
+    // 需要手动添加唯一id key
+    // callback 组件数据的回调函数(接受列表数据参数)
+    initData: function(callback){
+       
+       // 模拟数据
+       setTimeout(function(){
+            let list = testData.tableList;
+            list.forEach(function(ele) {
+                ele.key = ele.docid;
+            });
+            callback(list);
+       }, 1000)
+    },
+        
+    columns: [
+        {
+            title: 'DOCID',     // table header 文案
+            dataIndex: 'docid', // 数据对象内的属性，也做react vdom 的key
+            type: 'string',     // table 内显示的类型
+            sort: true,         // 是否需要排序
+            width:200
+        }, {
+            title: '标题',
+            dataIndex: 'title',
+            type: 'string'
+        }, {
+            title: '链接',
+            dataIndex: 'link',
+            type: 'link',
+            render: (text) => ( <span>
+                                    <a href={text}>链接</a>
+                                </span>),
+            width: 50
+        },{
+            title: '日期',
+            dataIndex: 'date',
+            type: 'string',
+            width: 150
+        },{
+            title: '图片',
+            dataIndex: 'img',
+            type: 'image'
+        }
+    ]
+
+};
+
+const Feature1 = FeatureSetConfig(graph_conf2);
+const Feature2 = FeatureSetConfig(graph_conf);
+const Feature3 = FeatureSetConfig(table_conf);
+
+const Feature = React.createClass({
+
+        render: function() {
+            return  <div>
+                        <Feature1 />
+                        <Feature2 />
+                        <Feature3 />
+                    </div>
+        }
+    });
 
 export default Feature;

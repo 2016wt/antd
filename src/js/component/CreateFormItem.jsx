@@ -20,6 +20,7 @@ let CFormItem = React.createClass({
         const formItemLayout = this.props.formItemLayout || {};
         const item = this.props.item || {};
         const defaultValue = item.defaultValue || '';
+        const defaultTimeValue = item.defaultValue || '2016-01-01 00:00:00';
         const defaultImgValue = this.state.img_url || item.defaultValue || '';
 
         switch (item.type){
@@ -38,7 +39,7 @@ let CFormItem = React.createClass({
                             label={item.label}
                             key={item.name}
                             {...formItemLayout}>
-                            <DatePicker showTime format="yyyy-MM-dd HH:mm:ss" {...getFieldProps(item.name, { initialValue:defaultValue})} />  
+                            <DatePicker showTime format="yyyy-MM-dd HH:mm:ss" {...getFieldProps(item.name, { initialValue:defaultTimeValue})} />  
                         </FormItem>
                 break;
 

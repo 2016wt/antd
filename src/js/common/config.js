@@ -39,7 +39,8 @@ const Config = {
                 items: [
                     {title: "table数据展示项", key: "Feature1-1"},
                     {title: "simple对象数据展示项", key: "Feature1-2"},
-                    {title: "数据可视化展示项", key: "Feature1-3"}
+                    {title: "数据可视化展示项", key: "Feature1-3"},
+                    {title: "综合数据展示", key: "Feature1-4"}
                 ]
             },
             {
@@ -92,6 +93,10 @@ const Config = {
                 title: '数据可视化 数据展示',
                 component: require('../feature/Feature1-3')
             }, 
+            "Feature1-4": {
+                title: '综合数据展示',
+                component: require('../feature/Feature1-4')
+            },
 
             "Feature1": {
                 title: '这是功能区域标题1',

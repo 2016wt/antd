@@ -52,7 +52,10 @@ const Main = React.createClass({
         const Feature = Data.component;
         const title = Data.title;
 
-        return  <Feature key={id} title={title}/>
+        return  <div key={id}>
+                    <h3 className="f-title">{title}</h3>
+                    <Feature />
+                </div>
     }
 });
 
