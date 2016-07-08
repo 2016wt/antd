@@ -33,6 +33,7 @@
      */
 
     {
+        // 头部配置示例 
         header: {
             title: "测试配置管理后台",
             icon: "appstore",
@@ -42,9 +43,22 @@
                 backgroundColor: "#F5F5F5"
             }
         },
-
+        
+        // 边栏导航配置示例 
         sider: {
+            // 层级列表
             menu: [
+                {
+                    title: "数据展示项",
+                    key: "dataShow",
+                    icon: "bars",
+                    items: [
+                        {title: "table数据展示项", key: "Feature1-1"},
+                        {title: "simple对象数据展示项", key: "Feature1-2"},
+                        {title: "数据可视化展示项", key: "Feature1-3"},
+                        {title: "综合数据展示", key: "Feature1-4"}
+                    ]
+                },
                 {
                     title: "导航1",
                     key: "subTitle1",
@@ -65,56 +79,32 @@
                         }
                     ]
                 },{
-                    title: "导航2",
-                    key: "subTitle2",
-                    icon: "delete",
-                    items: [
-                        {title: "选项4", key: "Feature4"}
-                    ]
-                },{
                     title: "选项5",
                     key: "Feature5"
                 }
             ],
-            openKeys:["subTitle1", "subTitle2", "subTitle3"],
+            // 默认打开的导航项目
+            openKeys:['dataShow','dataOperate'],
+
+            // 默认功能页
             selectedKey: "Feature1",
+            // 自定义样式
             style: {}
         },
-
+        
+        // 配置sider对应功能区域组件
         main: {
             components: {
-                "Feature1": {
-                    title: '这是功能区域标题1',
-                    component: require('../feature/Feature1')
-                },   // 纯数据展示
-                "Feature2": {
-                    title: '这是功能区域标题2',
-                    component: require('../feature/Feature2')
-                },   // 添加操作
-                "Feature3": {
-                    title: '这是功能区域标题3',
-                    component: require('../feature/Feature3')
+                "Feature1-1": {
+                    title: 'table 数据展示',
+                    component: require('../feature/Feature1-1')
+                }, 
+                "Feature1-2": {
+                    title: 'simple对象 数据展示',
+                    component: require('../feature/Feature1-2')
                 },
-                "Feature4": {
-                    title: '这是功能区域标题4',
-                    component: require('../feature/Feature4')
-                },
-                "Feature5": {
-                    title: '这是功能区域标题5',
-                    component: require('../feature/Feature5')
-                },
-                "Feature6": {
-                    title: '这是功能区域标题6',
-                    component: require('../feature/Feature6')
-                },
-                "Feature7": {
-                    title: '这是功能区域标题7',
-                    component: require('../feature/Feature7')
-                },
-                "Feature8": {
-                    title: '这是功能区域标题8',
-                    component: require('../feature/Feature2')
-                }
+
+                ......
             },
             style: {} 
         }
@@ -123,10 +113,14 @@
 
 ## 自动快读配置化搭建 配置文件详解
 
-    {
+    {   
+        // 对于数据展现形式 目前有 tableList graphList simpleObject 三种类型
+        type: 'tableList', // tableList graphList simpleObject complexObject 
+
         // 初始化展现的数据，使用callback 回传列表数据
         // 需要手动添加唯一id key
         // callback 组件数据的回调函数(接受列表数据参数)
+
         initData: function(callback){
             // 请求数据
             Reqwest({
@@ -284,8 +278,22 @@
                 }] // 可选
             }
         ],
-
-        uploadfile: '/umis/pushc/uploadfile'
+        
+        // simpleObject 类型下按钮
+        operate:[
+            {
+                text: '确认修改',
+                type: 'update',
+                style: {
+                    'marginRight': '30px'
+                }
+            }, {
+                text: '展示数据',
+                callback: function(item){
+                    console.log(item)
+                }
+            }
+        ],
 
     };
 

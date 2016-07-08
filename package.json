@@ -1,5 +1,5 @@
 {
-  "name": "antd-example",
+  "name": "antd-cms",
   "version": "1.0.0",
   "entry": {
     "index": "./src/index.jsx"
