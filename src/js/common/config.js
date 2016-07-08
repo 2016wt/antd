@@ -44,6 +44,16 @@ const Config = {
                 ]
             },
             {
+                title: "数据操作项目",
+                key: "dataOperate",
+                icon: "bars",
+                items: [
+                    {title: "table数据搜索操作", key: "Feature2-1"},
+                    {title: "table数据增删改操作", key: "Feature2-2"},
+                    {title: "simple对象数据修改操作", key: "Feature2-3"}
+                ]
+            },
+            {
                 title: "导航1",
                 key: "subTitle1",
                 icon: "setting",
@@ -74,7 +84,7 @@ const Config = {
                 key: "Feature5"
             }
         ],
-        openKeys:['dataShow'],
+        openKeys:['dataShow','dataOperate'],
         selectedKey: "Feature1",
         style: {}
     },
@@ -97,6 +107,19 @@ const Config = {
                 title: '综合数据展示',
                 component: require('../feature/Feature1-4')
             },
+
+            "Feature2-1": {
+                title: 'table 数据搜索操作',
+                component: require('../feature/Feature2-1')
+            }, 
+            "Feature2-2": {
+                title: 'table 数据增删改操作',
+                component: require('../feature/Feature2-2')
+            }, 
+            "Feature2-3": {
+                title: 'simple对象数据修改操作',
+                component: require('../feature/Feature2-3')
+            }, 
 
             "Feature1": {
                 title: '这是功能区域标题1',

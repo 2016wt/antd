@@ -268,7 +268,6 @@ const FeatureSet = (config) => {
                                     </div>:
                                     ''
                             }
-                            
                             { 
                                 config.UType.map(function(item){
                                     item.defaultValue = itemInfo[item.name]||'';
@@ -303,7 +302,7 @@ const FeatureSet = (config) => {
 
             let itemI = Immutable.fromJS(this.props.form.getFieldsValue());
 
-            if(btn.type){
+            if(btn.type === 'update'){
 
                 const self = this;
                 
@@ -323,7 +322,6 @@ const FeatureSet = (config) => {
             }
         }
     });
-
     simpleFeature = Form.create()(simpleFeature);
     
 

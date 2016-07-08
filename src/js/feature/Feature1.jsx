@@ -103,7 +103,8 @@ const simple_conf = {
         {
             text: '确认数据',
             style: {
-                'margin-right': '30px'
+                'marginRight': '30px',
+                'marginLeft': '80px'
             },
             callback: function(item){
                 console.log(item)
