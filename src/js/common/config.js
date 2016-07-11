@@ -54,6 +54,14 @@ const Config = {
                 ]
             },
             {
+                title: "自定义操作项目",
+                key: "customOperate",
+                icon: "bars",
+                items: [
+                    {title: "富文本编辑功能", key: "Feature3-1"}
+                ]
+            },
+            {
                 title: "导航1",
                 key: "subTitle1",
                 icon: "setting",
@@ -119,6 +127,11 @@ const Config = {
             "Feature2-3": {
                 title: 'simple对象数据修改操作',
                 component: require('../feature/Feature2-3')
+            }, 
+
+            "Feature3-1": {
+                title: '富文本编辑区域',
+                component: require('../feature/Feature3-1')
             }, 
 
             "Feature1": {
