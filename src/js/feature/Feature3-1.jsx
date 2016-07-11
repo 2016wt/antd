@@ -1,6 +1,5 @@
 // 含有可操作 table 栏的数据展示
 import React from 'react';
-
 import TinyMCE from 'react-tinymce';
 
 import Immutable from 'immutable';
