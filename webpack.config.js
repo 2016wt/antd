@@ -1,6 +1,4 @@
 
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
 module.exports = function(webpackConfig) {
     webpackConfig.module.loaders.forEach(function(loader) {
         if (loader.loader === 'babel') {
@@ -12,14 +10,6 @@ module.exports = function(webpackConfig) {
             delete loader.loader;
         }
         return loader;
-    });
-    webpackConfig.resolve.alias = {
-        tinymce : './src/js/libs/tinymce'
-    }
-
-    webpackConfig.module.loaders.push({ 
-        test: require.resolve('./src/js/libs/tinymce'), 
-        loader: "exports?tinymce" 
     });
 
     return webpackConfig;
