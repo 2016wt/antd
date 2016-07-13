@@ -29,7 +29,15 @@ const App = React.createClass({
                             <Sider selectedKey={this.props.params.FeatureId || config.sider.selectedKey}/>
                         </aside>
                         <section className="main-container">
-                            {this.props.children}
+                            {
+                                config.permission?
+                                    this.props.children:
+                                    (<div className="unpermission">
+                                        您暂无权限处理该系统工作，请先
+                                        <a href={config.loginUrl}>登录</a>
+                                        或者找相关人员申请权限。
+                                    </div>)
+                            }
                         </section>
                     </div>
                 </div>

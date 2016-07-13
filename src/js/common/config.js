@@ -168,7 +168,10 @@ const Config = {
             }
         },
         style: {} 
-    }
+    },
+
+    permission: BaiduInfo.permission,
+    loginUrl: BaiduInfo.loginUrl
 }
 
 export default Config;
