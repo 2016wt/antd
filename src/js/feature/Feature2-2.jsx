@@ -7,6 +7,63 @@ import Immutable from 'immutable';
 //https://github.com/ded/reqwest
 import Reqwest from 'reqwest';
 
+let CUTpye = [
+    {
+        name: 'id',
+        label: '唯一标识',
+        type: 'string',
+        placeholder: '请输入标示名称',
+        rules: [{ required: true, min: 5, message: '用户名至少为 5 个字符' }]
+    },{
+        name: 'id2',
+        label: '唯一标识',
+        type: 'string',
+        placeholder: '请输入标示名称',
+        rules: [{ required: true, type: 'email', message: '请输入正确的邮箱地址' }]
+    },{
+        name: 'date',
+        label: '项目开始时间',
+        type: 'date',
+    },{
+        name: 'stype',
+        label: '项目类型Select',
+        type: 'select',
+        defaultValue: 'one',
+        options:[{
+            text: '选项一',
+            value: 'one'
+        },{
+            text: '选项二',
+            value: 'two'
+        },{
+            text: '选项三',
+            value: 'three'
+        }]
+    },{
+        name: 'rtype',
+        label: '项目类型Radio',
+        type: 'radio',
+        defaultValue: 'one',
+        options:[{
+            text: '选项一',
+            value: 'one'
+        },{
+            text: '选项二',
+            value: 'two'
+        },{
+            text: '选项三',
+            value: 'three'
+        }]
+    },{
+        name: 'ischange',
+        label: '是否过滤',
+        type: 'switch'
+    },{
+        name: 'image',
+        label: '背景图片',
+        type: 'imageUpload'
+    }
+];
 
 const conf = {
     
@@ -85,64 +142,8 @@ const conf = {
 
     // 创建项目所需的字段 与 更新项目所需的字段
     // rules 规范可见 https://github.com/yiminghe/async-validator
-    CUType:[
-        {
-            name: 'id',
-            label: '唯一标识',
-            type: 'string',
-            placeholder: '请输入标示名称',
-            rules: [{ required: true, min: 5, message: '用户名至少为 5 个字符' }]
-        },{
-            name: 'id2',
-            label: '唯一标识',
-            type: 'string',
-            placeholder: '请输入标示名称',
-            rules: [{ required: true, type: 'email', message: '请输入正确的邮箱地址' }]
-        },{
-            name: 'date',
-            label: '项目开始时间',
-            type: 'date',
-        },{
-            name: 'stype',
-            label: '项目类型Select',
-            type: 'select',
-            defaultValue: 'one',
-            options:[{
-                text: '选项一',
-                value: 'one'
-            },{
-                text: '选项二',
-                value: 'two'
-            },{
-                text: '选项三',
-                value: 'three'
-            }]
-        },{
-            name: 'rtype',
-            label: '项目类型Radio',
-            type: 'radio',
-            defaultValue: 'one',
-            options:[{
-                text: '选项一',
-                value: 'one'
-            },{
-                text: '选项二',
-                value: 'two'
-            },{
-                text: '选项三',
-                value: 'three'
-            }]
-        },{
-            name: 'ischange',
-            label: '是否过滤',
-            type: 'switch'
-        },{
-            name: 'image',
-            label: '背景图片',
-            type: 'imageUpload'
-        }
-
-    ],
+    CType: Immutable.fromJS(CUTpye).toJS(),
+    UType: Immutable.fromJS(CUTpye).toJS(),
     
     columns: [
         {

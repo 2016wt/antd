@@ -50,8 +50,8 @@ const FeatureSet = (config) => {
             
             return  <div className="featureItem">
                         <RForm RType={config.RType} submit={self.handleRetrieve}/>
-                        <CForm CType={config.CType || config.CUType} submit={self.handleCreate}/>
-                        <UForm UType={config.UType || config.CUType} submit={self.handleUpdate} isShow={this.state.updateFromShow} updateItem={this.state.updateFromItem} hideForm={this.hideUpdateForm}/>
+                        <CForm CType={config.CType} submit={self.handleCreate}/>
+                        <UForm UType={config.UType} submit={self.handleUpdate} isShow={this.state.updateFromShow} updateItem={this.state.updateFromItem} hideForm={this.hideUpdateForm}/>
                         <Table dataSource={this.state.resultList} columns={this.state.columns} loading={this.state.loading} bordered/>
                     </div>
         },
@@ -280,7 +280,7 @@ const FeatureSet = (config) => {
                                     ''
                             }
                             { 
-                                (config.UType || config.CUType).map(function(item){
+                                config.UType.map(function(item){
                                     item.defaultValue = itemInfo[item.name]||'';
                                     return <CFormItem key={item.name} getFieldProps={getFieldProps} formItemLayout={formItemLayout} item={item}/>
                                 })

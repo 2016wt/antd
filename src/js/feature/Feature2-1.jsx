@@ -94,7 +94,6 @@ const conf = {
     // RType 查询字段
     // CType 创建字段
     // UType 更新字段
-    // CUType  创建与更新字段一致时可以使用
     RType:[
         {
             name: 'id',
