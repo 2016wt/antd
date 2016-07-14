@@ -83,9 +83,9 @@ const conf = {
     },
   
 
-    // 创建项目所需的字段
+    // 创建项目所需的字段 与 更新项目所需的字段
     // rules 规范可见 https://github.com/yiminghe/async-validator
-    CType:[
+    CUType:[
         {
             name: 'id',
             label: '唯一标识',
@@ -143,33 +143,7 @@ const conf = {
         }
 
     ],
-    // 更新项目所需的字段
-    UType:[
-        {
-            name: 'docid',
-            label: '唯一标识',
-            type: 'string',
-            placeholder: '请输入标示名称'
-        },{
-            name: 'title',
-            label: '标题',
-            type: 'string',
-            placeholder: '请输入标示名称'
-        },{
-            name: 'link',
-            label: '链接',
-            type: 'string'
-        },{
-            name: 'date',
-            label: '日期',
-            type: 'date'
-        },{
-            name: 'img',
-            label: '图片',
-            type: 'imageUpload'
-        }
-
-    ],
+    
     columns: [
         {
             title: 'DOCID',     // table header 文案
