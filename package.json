@@ -21,7 +21,7 @@
     "reqwest": "^2.0.5"
   },
   "devDependencies": {
-    "dora": "0.2.x",
+    "dora": "0.2.4",
     "dora-plugin-atool-build": "0.4.x",
     "dora-plugin-hmr": "0.3.x",
     "dora-plugin-proxy": "0.5.x",
