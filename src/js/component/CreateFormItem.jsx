@@ -20,7 +20,7 @@ let CFormItem = React.createClass({
         const formItemLayout = this.props.formItemLayout || {};
         const item = this.props.item || {};
         const defaultValue = item.defaultValue || '';
-        const defaultTimeValue = item.defaultValue || '2016-01-01 00:00:00';
+        const defaultTimeValue = item.defaultValue || new Date();
         const defaultImgValue = this.state.img_url || item.defaultValue || '';
 
         switch (item.type){
