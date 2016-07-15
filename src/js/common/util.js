@@ -2,6 +2,10 @@
 // 自定义的配置数据
 
 const DateFormat =  function(date, fmt) {
+    if(typeof date === 'string'){
+        date = new Date(date);
+    }
+    
     let o = {         
         "M+" : date.getMonth()+1, //月份         
         "d+" : date.getDate(), //日         

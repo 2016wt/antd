@@ -149,8 +149,9 @@ const FeatureSet = (config) => {
         handleUpdate: function(info){
             const self = this;
             let result = Immutable.fromJS(self.state.resultList);
-
-            config.Update(info, function(item){
+            
+            let infoN = Immutable.fromJS(self.state.updateFromItem).merge(info).toJS();
+            config.Update(infoN, function(item){
                 let resultList = result.map(function(v, i){
                     if(v.get('key') === item.key){
                         return Immutable.fromJS(item);
