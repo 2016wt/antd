@@ -19,9 +19,8 @@ let CFormItem = React.createClass({
         const getFieldProps = this.props.getFieldProps;
         const formItemLayout = this.props.formItemLayout || {};
         const item = this.props.item || {};
-        const defaultValue = item.defaultValue || '';
-        const defaultTimeValue = item.defaultValue || new Date();
-        const defaultImgValue = this.state.img_url || item.defaultValue || '';
+        
+        let defaultValue = item.defaultValue || '';
 
         switch (item.type){
             case 'string':
@@ -35,11 +34,14 @@ let CFormItem = React.createClass({
                 break;
 
             case 'date':
+                defaultValue = defaultValue ?
+                    (/(\d){4}(\-(\d){2}){2}\s((\d){2}(\:)){2}(\d){2}/.test(defaultValue)?defaultValue:new Date(defaultValue)):
+                    new Date();
                 return <FormItem
                             label={item.label}
                             key={item.name}
                             {...formItemLayout}>
-                            <DatePicker showTime format="yyyy-MM-dd HH:mm:ss" {...getFieldProps(item.name, { initialValue:defaultTimeValue})} />  
+                            <DatePicker showTime format="yyyy-MM-dd HH:mm:ss" {...getFieldProps(item.name, { initialValue: defaultValue})} />  
                         </FormItem>
                 break;
 
@@ -83,13 +85,14 @@ let CFormItem = React.createClass({
                 break;
 
             case 'imageUpload':
+                defaultValue = this.state.img_url || defaultValue || '';
                 return <FormItem
                             label={item.label}
                             key={item.name}
                             {...formItemLayout}>
                             <Input
-                            {...getFieldProps(item.name, { initialValue:defaultImgValue})} /> 
-                            <img className="uploadImg" src={defaultImgValue} />
+                            {...getFieldProps(item.name, { initialValue:defaultValue})} /> 
+                            <img className="uploadImg" src={defaultValue} />
                             <BDUploader success={this.uploadSuccess} />
                         </FormItem>
 
