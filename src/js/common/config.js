@@ -170,8 +170,12 @@ const Config = {
         style: {} 
     },
 
-    permission: BaiduInfo.permission,
-    loginUrl: BaiduInfo.loginUrl
+    userInfo:{
+        name: BaiduInfo.name || '游客',
+        aver: BaiduInfo.aver || "http://himg.bdimg.com/sys/portrait/item/113e68695f79696e6766656e67525e.jpg",
+        permission: BaiduInfo.permission,
+        loginUrl: BaiduInfo.loginUrl
+    }
 }
 
 export default Config;
