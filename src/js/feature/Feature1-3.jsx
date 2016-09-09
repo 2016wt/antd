@@ -11,6 +11,7 @@ import testData from '../common/test-data';
 const graph_conf = {
     
     type: 'graphList', // tableList graphList simpleObject complexObject 
+
     EchartStyle: {
         width: '100%',
         height: '450px'
@@ -20,53 +21,53 @@ const graph_conf = {
     // 需要手动添加唯一id key
     // callback 组件数据的回调函数(接受列表数据参数)
     initData: function(callback){
+
+        // 参考echarts 参数
+        var option = {
+            title: {
+                text: '堆叠区域图'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['邮件营销','联盟广告','视频广告']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ]
+        }
        
        // 模拟数据
        setTimeout(function(){
-            let series = testData.graphList;
-            series.forEach(function(item) {
+            option.series = testData.graphList;
+            option.series.forEach(function(item) {
                 item.type = 'line';
                 item.stack = '总量'
             });
 
-            callback(series);
+            callback(option);
        }, 1000)
-    },
-        
-    // 参考echarts 参数
-    option : {
-        title: {
-            text: '堆叠区域图'
-        },
-        tooltip : {
-            trigger: 'axis'
-        },
-        legend: {
-            data:['邮件营销','联盟广告','视频广告']
-        },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis : [
-            {
-                type : 'category',
-                boundaryGap : false,
-                data : ['周一','周二','周三','周四','周五','周六','周日']
-            }
-        ],
-        yAxis : [
-            {
-                type : 'value'
-            }
-        ]
     }
 
 };
@@ -82,11 +83,30 @@ const graph_conf2 = {
     // 初始化展现的数据，使用callback 回传列表数据
     // 需要手动添加唯一id key
     // callback 组件数据的回调函数(接受列表数据参数)
+    // 将回调数据掺入option
     initData: function(callback){
+
+        // 参考echarts 参数
+        var option = {
+            title : {
+                text: '某站点用户访问来源',
+                subtext: '纯属虚构',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+            }
+        }
        
         // 模拟数据
         setTimeout(function(){
-            let series = [
+            option.series = [
                 {
                     name: '访问来源',
                     type: 'pie',
@@ -109,30 +129,98 @@ const graph_conf2 = {
                 }
             ]
 
-            callback(series);
+            callback(option);
        }, 1000)
-    },
-        
-    // 参考echarts 参数
-    option : {
-        title : {
-            text: '某站点用户访问来源',
-            subtext: '纯属虚构',
-            x:'center'
-        },
-        tooltip : {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        legend: {
-            orient: 'vertical',
-            left: 'left',
-            data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-        }
     }
 
 };
 
-const Feature = FeatureSetConfig(graph_conf2);
+const graph_conf3 = {
+    
+    type: 'graphList', // tableList graphList simpleObject complexObject 
+    style: {
+        width: '100%',
+        height: '450px'
+    },
+
+    // 初始化展现的数据，使用callback 回传列表数据
+    // 需要手动添加唯一id key
+    // callback 组件数据的回调函数(接受列表数据参数)
+    // 将回调数据掺入option
+    initData: function(callback){
+
+
+        var xAxisData = [];
+        var data1 = [];
+        var data2 = [];
+        for (var i = 0; i < 100; i++) {
+            xAxisData.push('类目' + i);
+            data1.push((Math.sin(i / 5) * (i / 5 -10) + i / 6) * 5);
+            data2.push((Math.cos(i / 5) * (i / 5 -10) + i / 6) * 5);
+        }
+
+        // 参考echarts 参数
+        var option = {
+            title: {
+                text: '柱状图动画延迟'
+            },
+            legend: {
+                data: ['bar', 'bar2'],
+                align: 'left'
+            },
+            toolbox: {
+                // y: 'bottom',
+                feature: {
+                    magicType: {
+                        type: ['stack', 'tiled']
+                    },
+                    dataView: {},
+                    saveAsImage: {
+                        pixelRatio: 2
+                    }
+                }
+            },
+            tooltip: {},
+            xAxis: {
+                data: xAxisData,
+                silent: false,
+                splitLine: {
+                    show: false
+                }
+            },
+            yAxis: {
+            },
+            animationEasing: 'elasticOut',
+            animationDelayUpdate: function (idx) {
+                return idx * 5;
+            }
+        }
+       
+        // 模拟数据
+        setTimeout(function(){
+            
+            option.series = [{
+                name: 'bar',
+                type: 'bar',
+                data: data1,
+                animationDelay: function (idx) {
+                    return idx * 10;
+                }
+            }, {
+                name: 'bar2',
+                type: 'bar',
+                data: data2,
+                animationDelay: function (idx) {
+                    return idx * 10 + 100;
+                }
+            }]
+
+            callback(option);
+       }, 1000)
+    }
+
+};
+
+const Feature = FeatureSetConfig(graph_conf3);
 
 export default Feature;

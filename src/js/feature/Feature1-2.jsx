@@ -22,23 +22,6 @@ const simple_conf = {
        }, 1000)
     },
 
-    operate:[
-        {
-            text: '确认数据',
-            style: {
-                'marginRight': '30px'
-            },
-            callback: function(item){
-                console.log(item)
-            }
-        }, {
-            text: '展示数据',
-            callback: function(item){
-                console.log(item)
-            }
-        }
-    ],
-
     UType:[
         {
             name: 'docid',
@@ -62,6 +45,23 @@ const simple_conf = {
             name: 'img',
             label: '图片',
             type: 'imageUpload'
+        }
+    ],
+
+    operate:[
+        {
+            text: '确认数据',
+            style: {
+                'marginRight': '30px'
+            },
+            callback: function(item){
+                console.log(item)
+            }
+        }, {
+            text: '展示数据',
+            callback: function(item){
+                console.log(item)
+            }
         }
     ]
 }

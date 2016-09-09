@@ -1,15 +1,16 @@
-# antd example
-
-学习和使用 antd
-用其快速搭建后台系统
+# antd example  基于antd实现的配制式CMS
 
 开发 npm run dev
 打开浏览器 http://localhost:8989/
 
 构建 npm run build
-所使用的字体有跨域问题 在部署上线的时候需要注意下载字体
+所使用的字体有跨域问题 在部署上线的时候需要注意下载字体自行部署
+修改 src/css/customfont.less 即可
+
+整体部署配置分为 整站配置文件 以及 功能页面配置文件
 
 ## 整站配置文件详解
+src/js/common/config.js
 
     /**
      * [Config description]
@@ -21,10 +22,10 @@
      *     style    Object  自定义样式
      *
      * sider  管理后台侧栏配置
-     *     menu     Array   sider列表
-     *     openKeys Array   默认展开的sider区
-     *     selectedKey  String  默认打开的功能区
-     *     style    Object  自定义样式
+     *     menu     Array object   sider列表
+     *     openKeys Array   默认展开的sider 栏目区
+     *     selectedKey  String  默认打开的目标功能页面
+     *     style    Object  自定义样式    
      *
      * main  功能区域配置
      *     components   Object  配置sider对应功能区域组件

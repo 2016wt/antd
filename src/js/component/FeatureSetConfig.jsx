@@ -340,7 +340,7 @@ const FeatureSet = (config) => {
     let graphFeature = React.createClass({
         getInitialState: function(){
             return {
-                option: config.option
+                option: false
             }
         },
         
@@ -354,19 +354,19 @@ const FeatureSet = (config) => {
             const operate = config.operate || [];
 
             return  <div className="featureItem">
+                        {this.state.option?
                         <ReactEcharts
                             option={this.state.option} 
                             style={config.EchartStyle} 
-                            className='react_for_echarts' />
+                            className='react_for_echarts' />:
+                        ''}
                     </div>
         },
 
         componentDidMount: function(){
             const self = this;
-            let option = Immutable.fromJS(self.state.option).toJS();
 
-            config.initData(function(series){
-                option.series = series;
+            config.initData(function(option){
                 self.setState({
                     option: option
                 });
