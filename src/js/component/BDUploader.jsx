@@ -1,3 +1,10 @@
+/**
+ * 百度图片上传react组件
+ * 参数为 success 回调函数
+ * <BDUploader success={this.uploadImgSuccess} /> 
+ */
+
+
 import React from 'react';
 import { Button, Icon, message } from 'antd';
 import baidubce from 'bce-sdk-js';

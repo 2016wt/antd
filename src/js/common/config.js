@@ -54,7 +54,7 @@ const Config = {
                 ]
             },
             {
-                title: "自定义操作项目",
+                title: "综合自定义操作项目",
                 key: "customOperate",
                 icon: "bars",
                 items: [
@@ -92,7 +92,7 @@ const Config = {
                 key: "Feature5"
             }
         ],
-        openKeys:['dataShow','dataOperate'],
+        openKeys:['dataShow','dataOperate','customOperate'],
         selectedKey: "Feature1",
         style: {}
     },

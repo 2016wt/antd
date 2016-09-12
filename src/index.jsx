@@ -49,11 +49,13 @@ const App = React.createClass({
     componentWillUnmount: function(){}
 });
 
+// 除功能页面id 再添加可传递性数据参数（单一值）
 ReactDom.render((
     <Router history={hashHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={Main} />
             <Route path="/:FeatureId" component={Main} />
+            <Route path="/:FeatureId/:params" component={Main} />
         </Route>
     </Router>
 ), document.getElementById('react-content'));

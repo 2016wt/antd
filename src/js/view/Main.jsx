@@ -14,7 +14,7 @@ const Main = React.createClass({
         return  config.userInfo.permission?
                 <div key={id}>
                     <h3 className="f-title">{title}</h3>
-                    <Feature />
+                    <Feature params={this.props.params.params || ''}/>
                 </div>:
                 <div className="unpermission">
                     您暂无权限处理该系统工作，请先
