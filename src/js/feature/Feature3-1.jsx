@@ -4,11 +4,13 @@ import TinyMCE from 'react-tinymce';
 import Reqwest from 'reqwest';
 
 import BDUploader from '../component/BDUploader';
+import CFormItem from '../component/CreateFormItem';
 
 import { Form, Input, Button } from 'antd';
+
 const FormItem = Form.Item;
 let tinymceInstance;
-const Feature = React.createClass({
+let Feature = React.createClass({
     getInitialState: function(){
         return {
             value: '',
@@ -31,6 +33,57 @@ const Feature = React.createClass({
             },
             onChange: this.handleEditorChange
         }
+        let fields = [
+            {
+                name: 'id',
+                label: '唯一标识',
+                type: 'string',
+                placeholder: '请输入标示名称'
+            },{
+                name: 'date',
+                label: '开始时间',
+                type: 'date'
+            },{
+                name: 'stype',
+                label: '项目类型',
+                type: 'select',
+                defaultValue: 'one',
+                options:[{
+                    text: '选项一',
+                    value: 'one'
+                },{
+                    text: '选项二',
+                    value: 'two'
+                },{
+                    text: '选项三',
+                    value: 'three'
+                }]
+            },{
+                name: 'rtype',
+                label: '项目类型',
+                type: 'radio',
+                defaultValue: 'one',
+                options:[{
+                    text: '选项一',
+                    value: 'one'
+                },{
+                    text: '选项二',
+                    value: 'two'
+                },{
+                    text: '选项三',
+                    value: 'three'
+                }]
+            },{
+                name: 'ischange',
+                label: '是否过滤',
+                type: 'switch',
+                defaultValue: false
+            }
+
+        ]
+        const { getFieldProps } = this.props.form;
+        const updateItem = {};
+
         return  <div className="featureItem">
             <Form inline>
                 <FormItem
@@ -43,9 +96,20 @@ const Feature = React.createClass({
                     <Button type="primary" icon="swap" onClick={this.changeNews}>转码</Button>
                 </FormItem>
                 <FormItem>
-                    <Button type="button" icon="save" onClick={this.saveContent}>保存内容</Button>
+                    <Button type="button" icon="save" onClick={this.getFromData}>保存内容</Button>
                 </FormItem>
             </Form>
+
+            <Form inline style={{marginTop:'20px'}}>
+                { 
+                    fields.map(function(item){
+                        item.defaultValue = updateItem[item.name]||item.defaultValue||'';
+                        //return self.dealConfigUType(item, defaultValue);
+                        return <CFormItem key={item.name} getFieldProps={getFieldProps} item={item}/>
+                    })
+                }
+            </Form>
+
             <div style={{marginTop:'20px'}}>
                 <BDUploader success={this.uploadImgSuccess} />
                 <p>{this.state.imgUrl}</p>
@@ -56,6 +120,11 @@ const Feature = React.createClass({
 
     componentDidMount: function(e){
         tinymceInstance = tinymce.get(0);
+    },
+
+    getFromData: function(){
+        console.log(this.props.form.getFieldsValue())
+
     },
     
     uploadImgSuccess: function(url){
@@ -70,5 +139,7 @@ const Feature = React.createClass({
         return tinymceInstance.getContent(value);
     }
 });
+
+Feature = Form.create()(Feature);
 
 export default Feature;
