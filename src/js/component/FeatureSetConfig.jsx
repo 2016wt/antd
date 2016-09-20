@@ -79,18 +79,31 @@ const FeatureSet = (config) => {
                         return <span>
                                 {
                                     btns.map(function(btn,i) {
-                                        return  (
-                                            <span key={i}>
-                                                <a href="javascript:void 0;" onClick={self.operateCallbacks.bind(self, record, btn)}>{btn.text}</a>
-                                                {i!==btns.length-1?<span className="ant-divider"></span>:''}
-                                            </span>
-                                        );
+                                        if( btn.text ){
+                                            return  (
+                                                <span key={i}>
+                                                    <a href="javascript:void 0;" onClick={self.operateCallbacks.bind(self, record, btn)}>{btn.text}</a>
+                                                    {i!==btns.length-1?<span className="ant-divider"></span>:''}
+                                                </span>
+                                            );
+                                        }else if( btn.render ){
+                                            return (
+                                                <span key={i}>
+                                                    {btn.render(txt, record)}
+                                                    {i!==btns.length-1?<span className="ant-divider"></span>:''}
+                                                </span>
+                                            );
+                                        }
+                                        
                                             
                                     })
                                 }
                                 </span>
                     };
-                }else{
+                }else if( !item.dataIndex ){
+                    item.dataIndex = 'NORMAL_INDEX';
+                    column.render = item.render || self.renderFunc[item.type];
+                } else{
                     column.render = item.render || self.renderFunc[item.type] || ((text) => (<span>{text}</span>));
                 }
 

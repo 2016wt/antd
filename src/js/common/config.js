@@ -38,6 +38,7 @@ const Config = {
                 icon: "bars",
                 items: [
                     {title: "table数据展示项", key: "Feature1-1"},
+                    {title: "table数据展示项2", key: "Feature1-1-1"},
                     {title: "simple对象数据展示项", key: "Feature1-2"},
                     {title: "数据可视化展示项", key: "Feature1-3"},
                     {title: "综合数据展示", key: "Feature1-4"}
@@ -102,6 +103,10 @@ const Config = {
             "Feature1-1": {
                 title: 'table 数据展示',
                 component: require('../feature/Feature1-1')
+            }, 
+            "Feature1-1-1": {
+                title: 'table 数据展示',
+                component: require('../feature/Feature1-1-1')
             }, 
             "Feature1-2": {
                 title: 'simple对象 数据展示',

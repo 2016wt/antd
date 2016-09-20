@@ -1,6 +1,7 @@
 
 // 自定义的配置数据
 
+// 处理时间格式数据
 const DateFormat =  function(date, fmt) {
     if(typeof date === 'string'){
         date = new Date(date);
@@ -39,7 +40,20 @@ const DateFormat =  function(date, fmt) {
     return fmt; 
 }
 
+// 处理自定义链接参数数据
+const ParamsFixed = function(str){
+    let pObj = {};
+    let pArr = str.split('&');
+    for (var i = pArr.length - 1; i >= 0 && pArr[i]; i--) {
+        let dataArr = pArr[i].split('=');
+        pObj[dataArr[0]] = dataArr[1];
+    }
+
+    return pObj;
+}
+
 
 export default {
-    DateFormat : DateFormat
+    DateFormat : DateFormat,
+    ParamsFixed : ParamsFixed
 };

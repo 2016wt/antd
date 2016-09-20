@@ -342,6 +342,44 @@ const tableList = [
     }
 ]
 
+const table2List = [
+    {
+        id: "5",
+        title: "111111互联网金融最强监管政策来袭，行业强化约束正本清源",
+        url: "http://news.xhby.net/system/2016/09/18/029642755.shtml",
+        nid: "13606399328377680923",
+        insert_time: "2016-09-19 19:31:40",
+        update_time: "2016-09-19 19:32:10"
+    }, {
+        id: "4",
+        title: "互联网金融最强监管政策来袭，行业强化约束正本清源",
+        url: "http://news.xhby.net/system/2016/09/18/029642755.shtml",
+        nid: "13606399328377680923",
+        insert_time: "2016-09-19 19:30:39",
+        update_time: "2016-09-19 19:30:39"
+    }, {
+        id: "3",
+        title: "互联网金融最强监管政策来袭，行业强化约束正本清源",
+        url: "http://news.xhby.net/system/2016/09/18/029642755.shtml",
+        nid: "13606399328377680923",
+        insert_time: "2016-09-19 19:30:31",
+        update_time: "2016-09-19 19:30:31"
+    }, {
+        id: "2",
+        title: "互联网金融最强监管政策来袭，行业强化约束正本清源",
+        url: "http://news.xhby.net/system/2016/09/18/029642755.shtml",
+        nid: "13606399328377680923",
+        insert_time: "2016-09-19 18:07:44",
+        update_time: "2016-09-19 18:07:44"
+    }, {
+        id: "1",
+        title: "互联网金融最强监管政策来袭，行业强化约束正本清源",
+        url: "http://news.xhby.net/system/2016/09/18/029642755.shtml",
+        nid: "13606399328377680923",
+        insert_time: "2016-09-19 18:07:29",
+        update_time: "2016-09-19 18:07:29"
+    }];
+
 const graphList = [{
     name: '邮件营销',
     data: [120, 132, 101, 134, 90, 230, 210]
@@ -420,5 +458,6 @@ const simpleObject = {
 export default {
     tableList: tableList,
     graphList: graphList,
-    simpleObject: simpleObject
+    simpleObject: simpleObject,
+    table2List: table2List
 };
