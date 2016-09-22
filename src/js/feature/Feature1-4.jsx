@@ -7,6 +7,7 @@ import Immutable from 'immutable';
 import Reqwest from 'reqwest';
 
 import testData from '../common/test-data';
+import {message} from 'antd';
 
 const graph_conf = {
     
@@ -235,6 +236,7 @@ const table_conf = {
             let list = testData.tableList;
             list.forEach(function(ele) {
                 ele.key = ele.docid;
+                ele.img = ele.images && ele.images[0] && ele.images[0].img
             });
             callback(list);
        }, 1000)
@@ -256,7 +258,7 @@ const table_conf = {
             dataIndex: 'link',
             type: 'link',
             render: (text) => ( <span>
-                                    <a href={text}>链接</a>
+                                    <a href={text} target='_blank'>链接</a>
                                 </span>),
             width: 50
         },{

@@ -28,7 +28,7 @@ let CFormItem = React.createClass({
                             label={item.label}
                             key={item.name}
                             {...formItemLayout}>
-                            <Input placeholder={item.placeholder||''}
+                            <Input placeholder={item.placeholder||'' } style={{ width: item.width }}
                             {...getFieldProps(item.name, {rules:item.rules, initialValue:defaultValue})} />    
                         </FormItem>
                 break;
@@ -50,7 +50,7 @@ let CFormItem = React.createClass({
                             label={item.label}
                             key={item.name}
                             {...formItemLayout}>
-                            <Select  {...getFieldProps(item.name, { initialValue: defaultValue })} >
+                            <Select  {...getFieldProps(item.name, { initialValue: defaultValue })} style={{ width: item.width }}>
                                 {
                                     item.options.map(function(item){
                                         return <Option key={item.value} value={item.value}>{item.text}</Option>

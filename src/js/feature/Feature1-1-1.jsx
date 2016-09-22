@@ -103,16 +103,11 @@ const table_conf = {
             type: 'operate',    // 操作的类型必须为 operate
             width: 150,
             btns: [{
-                text: '重新编辑',
-                callback: function(item){
-                    location.hash = '#/Feature1-1/nid='+item.nid
-                }
-            },{
                 // text: '复制链接',
                 // callback: function(item){
                 //     console.log(item)
                 // }
-                render: (text, item) => (<CopyClipboard title='复制链接' type='link' data={'http://mbrowser.baidu.com/web/rsstopic/landing#/feed/ACT/news_'+item.nid+'/'+encodeURIComponent(item.url)} />)
+                render: (text, item) => (<CopyClipboard title='复制链接' type='link' data={item.url} />)
             }], 
             
             // 对应btns 的回调函数 
