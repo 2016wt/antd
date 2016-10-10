@@ -6,15 +6,15 @@ import config from '../common/config';
 
 const Main = React.createClass({
     render: function(){
-        const id = this.props.params.FeatureId;
-        const Data = config.main.components[id] || config.main.components[config.sider.selectedKey];
+        const id = this.props.featureId;
+        const Data = config.main.components[id];
         const Feature = Data.component;
         const title = Data.title;
 
         return  config.userInfo.permission?
                 <div key={id}>
                     <h3 className="f-title">{title}</h3>
-                    <Feature params={this.props.params.params || ''}/>
+                    <Feature params={this.props.params || ''}/>
                 </div>:
                 <div className="unpermission">
                     您暂无权限处理该系统工作，请先

@@ -17,7 +17,10 @@ const App = React.createClass({
 	getDefaultProps: function(){
     },
     getInitialState: function(){
-        return {}
+        return {
+            featureId: this.props.params.FeatureId || config.sider.selectedKey,
+            params:  this.props.params.params,
+        }
     },
     componentWillMount: function(){},
 
@@ -27,12 +30,10 @@ const App = React.createClass({
 
                     <div className="main-wrapper">
                         <aside className="aside-container">
-                            <Sider selectedKey={this.props.params.FeatureId || config.sider.selectedKey}/>
+                            <Sider selectedKey={this.state.featureId} />
                         </aside>
                         <section className="main-container">
-                            { 
-                                this.props.children
-                            }
+                            <Main featureId={this.state.featureId} params={this.state.params} />
                         </section>
                     </div>
                 </div>
@@ -40,7 +41,12 @@ const App = React.createClass({
 
     componentDidMount: function(){
     },
-    componentWillReceiveProps: function(newProps){},
+    componentWillReceiveProps: function(newProps){
+        this.setState({
+            featureId: newProps.params.FeatureId,
+            params:  newProps.params.params,
+        });
+    },
     shouldComponentUpdate: function(){
         return true;
     },
@@ -52,10 +58,7 @@ const App = React.createClass({
 // 除功能页面id 再添加可传递性数据参数（单一值）
 ReactDom.render((
     <Router history={hashHistory}>
-        <Route path="/" component={App}>
-            <IndexRoute component={Main} />
-            <Route path="/:FeatureId" component={Main} />
-            <Route path="/:FeatureId/:params" component={Main} />
-        </Route>
+        <Route path="/" component={App} />
+        <Route path="/:FeatureId(/:params)" component={App} />
     </Router>
 ), document.getElementById('react-content'));

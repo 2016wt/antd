@@ -13,21 +13,14 @@ const Sider = React.createClass({
         }
     },
     getInitialState: function(){
-        return {
-            selectedKeys: this.props.selectedKey
-        };
-    },
-    handleClick: function(e) {
-        this.setState({
-            selectedKeys: e.key
-        });
+        return {};
     },
     render: function() {
 
         return  <Menu onClick={this.handleClick}
                     style={this.props.menuStyle}
                     defaultOpenKeys={this.props.openKeys}
-                    selectedKeys={[this.state.selectedKeys]}
+                    selectedKeys={[this.props.selectedKey]}
                     mode="inline">
 
                     {this.dealMenuList(this.props.menuList)}
